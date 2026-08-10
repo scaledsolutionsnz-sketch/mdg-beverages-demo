@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MDG Beverages | Four brands, one bar cart</title>
+<meta name="description" content="MDG Beverages is a New Zealand drinks house. Four brands, one bar cart.">
+<meta property="og:title" content="MDG Beverages">
+<meta property="og:description" content="A New Zealand drinks house. Four brands, one bar cart.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://mdg-beverages-demo.vercel.app/img/solara.jpg">
+<meta name="theme-color" content="#07070A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2307070A'/%3E%3Ctext x='50' y='66' font-family='Georgia,serif' font-size='44' letter-spacing='2' text-anchor='middle' fill='%23C9A24B'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#07070A; --bone:#F2EDE4; --brass:#C9A24B;
+  --bg:#07070A; --fg:#F2EDE4; --accent:#C9A24B; --muted:rgba(242,237,228,.6);
+  --rule:rgba(242,237,228,.16);
+  --display:'Bodoni Moda',Georgia,serif;
+  --body:'Jost',-apple-system,Helvetica,Arial,sans-serif;
+  --pad:clamp(20px,5vw,72px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-weight:300;
+  transition:background .6s ease,color .6s ease;overflow-x:hidden}
+body[data-brand="solara"]{--bg:#120A06;--fg:#F6EBDD;--accent:#D9793F;--muted:rgba(246,235,221,.6);--rule:rgba(246,235,221,.16)}
+body[data-brand="vanta"]{--bg:#020000;--fg:#F6E9F1;--accent:#EC008C;--muted:rgba(246,233,241,.6);--rule:rgba(246,233,241,.16)}
+body[data-brand="onlycans"]{--bg:#F7F1EC;--fg:#1A1114;--accent:#E2653F;--muted:rgba(26,17,20,.62);--rule:rgba(26,17,20,.14)}
+body[data-brand="divot"]{--bg:#050507;--fg:#EFEFF2;--accent:#E0007A;--muted:rgba(239,239,242,.6);--rule:rgba(239,239,242,.16)}
+
+a{color:inherit}
+.eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;font-weight:500;color:var(--accent)}
+.rule{height:1px;background:var(--rule);border:0;margin:0}
+
+/* ---------- age gate ---------- */
+#gate{position:fixed;inset:0;z-index:100;background:#07070A;color:#F2EDE4;
+  display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
+#gate .in{max-width:460px}
+#gate .mark{font-family:var(--display);font-size:38px;letter-spacing:.14em;margin:0 0 6px}
+#gate p{font-size:15px;line-height:1.7;color:rgba(242,237,228,.66);margin:18px 0 28px}
+#gate .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+#gate button{font:inherit;font-size:13px;letter-spacing:.2em;text-transform:uppercase;
+  padding:14px 30px;border:1px solid #C9A24B;background:none;color:#F2EDE4;cursor:pointer;transition:.2s}
+#gate button.yes{background:#C9A24B;color:#07070A}
+#gate button:hover{opacity:.82}
+#gate .no{font-size:13px;color:rgba(242,237,228,.5);margin-top:22px;display:none}
+
+/* ---------- brand bar ---------- */
+header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--rule);
+  transition:background .6s ease}
+.bar{display:flex;align-items:stretch;min-height:66px}
+.house{display:flex;align-items:center;padding:0 22px;border-right:1px solid var(--rule);flex:0 0 auto}
+.house b{font-family:var(--display);font-size:19px;letter-spacing:.2em;font-weight:500}
+.house span{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);display:block;margin-top:2px}
+nav{display:flex;flex:1;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:1;min-width:118px;background:none;border:0;border-right:1px solid var(--rule);
+  color:var(--fg);font-family:var(--display);font-size:15px;letter-spacing:.22em;text-transform:uppercase;
+  cursor:pointer;padding:20px 10px;position:relative;transition:.25s;white-space:nowrap}
+nav button:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent);
+  transform:scaleX(0);transition:transform .3s ease}
+nav button[aria-selected="true"]{color:var(--accent)}
+nav button[aria-selected="true"]:after{transform:scaleX(1)}
+nav button:hover{opacity:.75}
+.trade{display:flex;align-items:center;padding:0 22px;font-size:11px;letter-spacing:.24em;
+  text-transform:uppercase;text-decoration:none;border-left:1px solid var(--rule);flex:0 0 auto}
+.trade:hover{color:var(--accent)}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;min-height:clamp(560px,78vh,820px);align-items:center}
+.hero .copy{padding:clamp(40px,6vw,84px) var(--pad);position:relative;z-index:2}
+.hero h1{font-family:var(--display);font-weight:400;margin:14px 0 0;
+  font-size:clamp(58px,10.5vw,146px);line-height:.86;letter-spacing:-.01em;
+  margin-right:clamp(-180px,-10vw,-40px);position:relative;text-shadow:0 2px 40px rgba(0,0,0,.35)}
+body[data-brand="onlycans"] .hero h1{text-shadow:none}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.tag{font-family:var(--display);font-style:italic;font-size:clamp(19px,2.4vw,28px);margin:22px 0 0;color:var(--fg)}
+.blurb{max-width:44ch;font-size:16px;line-height:1.78;color:var(--muted);margin:22px 0 0}
+.spec{display:flex;gap:26px;flex-wrap:wrap;margin:30px 0 0;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted)}
+.spec b{display:block;font-family:var(--display);font-size:19px;letter-spacing:.06em;color:var(--fg);
+  text-transform:none;font-weight:500;margin-top:5px}
+.cta{display:inline-block;margin-top:38px;padding:15px 34px;border:1px solid var(--accent);color:var(--accent);
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;text-decoration:none;transition:.25s}
+.cta:hover{background:var(--accent);color:var(--bg)}
+.cta:active{transform:translateY(1px)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.shot{position:relative;height:100%;min-height:340px;overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:cover;display:block;animation:drift 16s ease-in-out infinite alternate}
+@keyframes drift{from{transform:scale(1)}to{transform:scale(1.06)}}
+.shot:after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,var(--bg) 0%,rgba(0,0,0,0) 34%);pointer-events:none}
+body[data-brand="onlycans"] .shot:after{background:linear-gradient(90deg,var(--bg) 0%,rgba(255,255,255,0) 30%)}
+
+/* ---------- marquee ---------- */
+.marq{overflow:hidden;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  padding:14px 0;white-space:nowrap;position:relative}
+.marq .track{display:inline-block;animation:marq 26s linear infinite;will-change:transform}
+.marq span{font-family:var(--display);font-style:italic;font-size:clamp(16px,2vw,22px);
+  letter-spacing:.08em;color:var(--muted);padding:0 2.2em}
+.marq span i{font-style:normal;color:var(--accent);padding-right:2.2em}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marq .track{animation:none}}
+
+/* ---------- range ---------- */
+section{padding:clamp(56px,8vw,110px) var(--pad)}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
+  padding-bottom:20px;border-bottom:1px solid var(--rule);margin-bottom:44px}
+.sechead h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4vw,46px);margin:8px 0 0}
+.grid{display:grid;gap:clamp(22px,3vw,44px);grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.card{border:1px solid var(--rule);padding:0 0 28px;transition:border-color .3s}
+.card:hover{border-color:var(--accent)}
+.card .pic{aspect-ratio:4/3;overflow:hidden;background:#000}
+.card .pic img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.card:hover .pic img{transform:scale(1.04)}
+.card .txt{padding:24px 24px 0}
+.card h3{font-family:var(--display);font-size:24px;font-weight:400;margin:10px 0 0}
+.card p{font-size:14px;line-height:1.7;color:var(--muted);margin:12px 0 0}
+.card .meta{margin-top:16px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+
+/* ---------- lifestyle strip ---------- */
+.life{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,26px);margin-top:clamp(26px,4vw,48px)}
+.life figure{margin:0;aspect-ratio:3/4;overflow:hidden;border:1px solid var(--rule)}
+.life img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.life figure:hover img{transform:scale(1.04)}
+@media (max-width:880px){.life{grid-template-columns:repeat(2,1fr)}.life figure:last-child{grid-column:span 2;aspect-ratio:3/2}}
+
+/* ---------- house ---------- */
+.house-band{background:var(--ink);color:var(--bone);--muted:rgba(242,237,228,.6);--rule:rgba(242,237,228,.14);--accent:var(--brass)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,80px);align-items:start}
+.two p{font-size:16px;line-height:1.85;color:var(--muted);margin:0 0 18px}
+.lead{font-family:var(--display);font-size:clamp(22px,3vw,34px);line-height:1.35;color:var(--bone);margin:0}
+.list{list-style:none;padding:0;margin:34px 0 0}
+.list li{display:flex;justify-content:space-between;gap:18px;padding:16px 0;border-top:1px solid var(--rule);
+  font-size:14px;letter-spacing:.02em}
+.list li span{color:var(--muted)}
+
+form{display:grid;gap:16px;max-width:520px;margin-top:30px}
+form label{display:grid;gap:7px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+input,textarea,select{font:inherit;font-size:15px;padding:14px 16px;background:transparent;
+  border:1px solid var(--rule);color:inherit;border-radius:0}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.55}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-offset:2px;border-color:transparent}
+textarea{min-height:120px;resize:vertical}
+button.send{font:inherit;font-size:11px;letter-spacing:.24em;text-transform:uppercase;padding:16px;
+  background:var(--brass);color:var(--ink);border:0;cursor:pointer;transition:.2s}
+button.send:hover{opacity:.85}
+select option{color:#111}
+
+footer{background:#040406;color:rgba(242,237,228,.5);padding:52px var(--pad);font-size:13px;line-height:1.9}
+footer .frow{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-end}
+footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:.2em;font-weight:500}
+.warn{margin-top:26px;padding-top:20px;border-top:1px solid rgba(242,237,228,.12);max-width:70ch}
+
+@media (max-width:880px){
+  .hero{grid-template-columns:1fr}
+  .hero h1{margin-right:0}
+  .shot{order:-1;min-height:56vh}
+  .shot:after{background:linear-gradient(0deg,var(--bg) 0%,rgba(0,0,0,0) 42%)}
+  body[data-brand="onlycans"] .shot:after{background:linear-gradient(0deg,var(--bg) 0%,rgba(255,255,255,0) 38%)}
+  .two{grid-template-columns:1fr}
+  .house{padding:0 16px}
+  nav button{min-width:104px;font-size:13px;padding:16px 8px}
+  .trade{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+.fade{animation:fade .55s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body data-brand="solara">
+
+<div id="gate" role="dialog" aria-modal="true" aria-label="Age verification">
+  <div class="in">
+    <p class="mark">MDG</p>
+    <p class="eyebrow">Beverages</p>
+    <p>You must be 18 or over to enter this site. Please confirm your age.</p>
+    <div class="row">
+      <button class="yes" id="gyes">I am 18 or over</button>
+      <button id="gno">I am under 18</button>
+    </div>
+    <p class="no" id="gmsg">Sorry, you need to be 18 or over to view this site.</p>
+  </div>
+</div>
+
+<header>
+  <div class="bar">
+    <div class="house"><div><b>MDG</b><span>Beverages</span></div></div>
+    <nav id="nav" role="tablist" aria-label="Brands"></nav>
+    <a class="trade" href="#trade">Trade enquiries</a>
+  </div>
+</header>
+
+<main>
+  <div class="hero" id="hero"></div>
+  <div class="marq" aria-hidden="true"><div class="track" id="marq"></div></div>
+  <section id="range"></section>
+
+  <div class="house-band">
+    <section>
+      <div class="sechead reveal">
+        <div><h2>Four brands, one bar cart</h2></div>
+      </div>
+      <div class="two">
+        <div>
+          <p class="lead">MDG Beverages builds drinks for the moment they get opened, not for the shelf they sit on.</p>
+          <p style="margin-top:26px">Every brand in the range starts the same way. A room, an occasion, a crowd. Then the liquid gets built to suit it. That is why a Solara does not taste like a Divot, and why neither of them reads like the other on a shelf.</p>
+          <p>We handle the blending, the packaging and the supply out of New Zealand, and we work with venues, retailers and distributors across the country.</p>
+        </div>
+        <div>
+          <p class="eyebrow">The range at a glance</p>
+          <ul class="list">
+            <li>Solara <span>Sparkling mimosa</span></li>
+            <li>Vanta <span>Sparkling ros&eacute;</span></li>
+            <li>OnlyCans <span>Vodka sodas</span></li>
+            <li>Divot <span>Urban Polo mixers</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="trade">
+      <div class="sechead reveal">
+        <div><h2>Stock us, or ask us anything</h2></div>
+      </div>
+      <div class="two">
+        <div class="reveal">
+          <p>Bars, bottle stores, distributors and event buyers. Tell us what you need and where you are, and we will come back with pricing and availability.</p>
+          <p>For anything else, including media and collaborations, use the same form and pick the reason that fits.</p>
+        </div>
+        <div class="reveal">
+          <form id="enq">
+            <label>Your name<input type="text" name="name" placeholder="Alex Parata" required></label>
+            <label>Email<input type="email" name="email" placeholder="you@venue.co.nz" required></label>
+            <label>Venue or company<input type="text" name="company" placeholder="Optional"></label>
+            <label>Reason<select name="reason">
+              <option>Trade enquiry</option>
+              <option>Distribution</option>
+              <option>Events</option>
+              <option>Media</option>
+              <option>Something else</option>
+            </select></label>
+            <label>What do you need?<textarea name="msg" placeholder="Brands, volumes, where you are"></textarea></label>
+            <button class="send" type="submit">Send enquiry</button>
+            <p id="sent" style="font-size:14px;color:var(--brass);display:none;margin:4px 0 0">Opening your email client with the details filled in. We will come back to you shortly.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="frow">
+    <div><b>MDG</b><br>Beverages, New Zealand</div>
+    <div>hello@mdgbeverages.com<br>Trade &middot; Distribution &middot; Events</div>
+    <div>Instagram<br>Facebook</div>
+  </div>
+  <p class="warn">R18. It is an offence to supply alcohol to a person under 18 years. Please enjoy our drinks responsibly. &copy; <span id="yr"></span> MDG Beverages.</p>
+</footer>
+
+<script>
+const BRANDS = {
+  solara: {
+    name:"Solara", accent:"Sparkling mimosa", italic:null,
+    tag:"By invitation.",
+    blurb:"Blood orange and stone fruit over a dry sparkling base. Built for long afternoons that turn into evenings without anyone deciding they should.",
+    spec:[["Style","Sparkling mimosa"],["Size","250 mL"],["ABV","7%"]],
+    shot:"img/solara.jpg",
+    range:[
+      {img:"img/solara.jpg",name:"Sparkling Mimosa",meta:"250 mL &middot; 7%",
+       copy:"Citrus forward, dry finish, no syrup hangover. Serve it cold and straight from the can, or over ice with a wedge of blood orange."}
+    ]
+  },
+  vanta: {
+    name:"Vanta", accent:"Sparkling rosé", italic:null,
+    tag:"Tonight we Vanta.",
+    blurb:"A sparkling rosé made for the back half of the night. Dark fruit, fine bead, and a bottle that holds the room under a low light.",
+    spec:[["Style","Sparkling rosé"],["Formats","250 mL can &middot; 750 mL bottle"],["Launch","Late 2026"]],
+    shot:"img/vanta.jpg",
+    range:[
+      {img:"img/vanta.jpg",name:"Rosé 750 mL",meta:"Bottle",
+       copy:"The centrepiece pour. Table service, celebrations, and anywhere a bottle needs to say something before it is opened."},
+      {img:"img/vanta-can.jpg",name:"Rosé 250 mL",meta:"Can",
+       copy:"The same liquid, no ice bucket required. Built for festivals, poolside and anywhere glass is not welcome."}
+    ]
+  },
+  onlycans: {
+    name:"OnlyCans", accent:"Vodka soda", italic:null,
+    tag:"Good times only.",
+    blurb:"Vodka, soda and real fruit, wrapped in the group chat you should have left. Light, sharp and unserious on purpose.",
+    spec:[["Style","Vodka with soda"],["Size","330 mL"],["ABV","4.5–5%"]],
+    shot:"img/onlycans-peach.jpg",
+    range:[
+      {img:"img/onlycans-peach.jpg",name:"New Phone Who Dis",meta:"Peach &amp; raspberry &middot; 330 mL &middot; 4.5%",
+       copy:"Ripe peach with a raspberry tang underneath. Soft, sweet and gone faster than you planned."},
+      {img:"img/onlycans-apple.jpg",name:"U up?",meta:"Sour apple &amp; lime &middot; 330 mL &middot; 5%",
+       copy:"Sharp green apple cut with lime. More bite than your last situation, which is the entire point."}
+    ]
+  },
+  divot: {
+    name:"Divot", accent:"Urban Polo", italic:null,
+    tag:"Stomp the divots. Sip something better.",
+    blurb:"The official pour of Urban Polo. Two classic mixers rebuilt properly, in a can that belongs on the sideline and behind the bar.",
+    spec:[["Style","Premium mixers"],["Size","250 mL"],["ABV","5%"]],
+    shot:"img/divot-pair.jpg",
+    range:[
+      {img:"img/divot-pour.jpg",name:"Pink Gin &amp; Tonic",meta:"Rosé tonic, raspberry &amp; lime &middot; 5%",
+       copy:"Pink gin over rosé tonic with raspberry and lime. Dry, floral and far less sweet than the category deserves."},
+      {img:"img/divot-pair.jpg",name:"Vodka Soda",meta:"White peach &amp; yuzu &middot; 5%",
+       copy:"Clean vodka soda lifted with white peach and yuzu. Crisp enough to drink all afternoon in the sun."}
+    ],
+    gallery:[
+      {img:"img/divot-life-1.jpg",alt:"Two friends at a park picnic raising Divot cans"},
+      {img:"img/divot-life-2.jpg",alt:"A Divot Pink Gin and Tonic can held up to the camera at a street bar"},
+      {img:"img/divot-life-3.jpg",alt:"A Divot can in hand beside a cherry-print handbag"}
+    ]
+  }
+};
+
+const order = ["solara","vanta","onlycans","divot"];
+const nav = document.getElementById('nav');
+const hero = document.getElementById('hero');
+const range = document.getElementById('range');
+
+order.forEach(k=>{
+  const b=document.createElement('button');
+  b.type='button'; b.setAttribute('role','tab'); b.dataset.key=k;
+  b.textContent=BRANDS[k].name;
+  b.onclick=()=>select(k);
+  nav.appendChild(b);
+});
+
+function select(k){
+  const d=BRANDS[k];
+  document.body.dataset.brand=k;
+  [...nav.children].forEach(b=>b.setAttribute('aria-selected', b.dataset.key===k));
+
+  hero.innerHTML=`
+    <div class="copy fade">
+      <p class="eyebrow">${d.accent}</p>
+      <h1>${d.name}</h1>
+      <p class="tag">${d.tag}</p>
+      <p class="blurb">${d.blurb}</p>
+      <div class="spec">${d.spec.map(s=>`<div>${s[0]}<b>${s[1]}</b></div>`).join('')}</div>
+      <a class="cta" href="#range">See the range</a>
+    </div>
+    <div class="shot fade"><img src="${d.shot}" alt="${d.name}"></div>`;
+
+  const half=Array.from({length:6},()=>`<span><i>${d.name}</i>${d.tag}</span>`).join('');
+  document.getElementById('marq').innerHTML=half+half;
+
+  range.innerHTML=`
+    <div class="sechead">
+      <div><h2>The ${d.name} range</h2></div>
+      <a class="cta" style="margin:0" href="#trade">Stock ${d.name}</a>
+    </div>
+    <div class="grid">${d.range.map((r,idx)=>`
+      <article class="card fade" style="animation-delay:${idx*90}ms">
+        <div class="pic"><img src="${r.img}" alt="${r.name}" loading="lazy"></div>
+        <div class="txt"><p class="meta">${r.meta}</p><h3>${r.name}</h3><p>${r.copy}</p></div>
+      </article>`).join('')}</div>
+    ${d.gallery?`<div class="life">${d.gallery.map((g,idx)=>`
+      <figure class="fade" style="animation-delay:${180+idx*90}ms"><img src="${g.img}" alt="${g.alt}" loading="lazy"></figure>`).join('')}</div>`:''}`;
+}
+select('solara');
+
+const gate=document.getElementById('gate');
+try{ if(sessionStorage.getItem('mdg-age')==='ok') gate.style.display='none'; }catch(e){}
+document.getElementById('gyes').onclick=()=>{
+  try{sessionStorage.setItem('mdg-age','ok')}catch(e){}
+  gate.style.display='none';
+};
+document.getElementById('gno').onclick=()=>{document.getElementById('gmsg').style.display='block'};
+
+// Enquiry form opens a pre-filled Gmail compose to the house address, so the
+// message actually reaches MDG without a form backend.
+document.getElementById('enq').addEventListener('submit',e=>{
+  e.preventDefault();
+  const f=e.target;
+  const to=['hello','mdgbeverages.com'].join('@');
+  const su=encodeURIComponent(f.reason.value+' - '+(f.company.value||f.name.value));
+  const body=encodeURIComponent(
+    'Name: '+f.name.value+'\n'+
+    'Email: '+f.email.value+'\n'+
+    'Venue/company: '+(f.company.value||'-')+'\n'+
+    'Reason: '+f.reason.value+'\n\n'+
+    f.msg.value);
+  window.open('https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(to)+'&su='+su+'&body='+body,'_blank','noopener');
+  document.getElementById('sent').style.display='block';
+  f.reset();
+});
+
+// Scroll reveals, skipped for reduced motion.
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}else{
+  document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+}
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
