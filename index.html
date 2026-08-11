@@ -152,7 +152,12 @@ button.send{font:inherit;font-size:11px;letter-spacing:.24em;text-transform:uppe
 button.send:hover{opacity:.85}
 select option{color:#111}
 
-footer{background:#040406;color:rgba(242,237,228,.5);padding:52px var(--pad);font-size:13px;line-height:1.9}
+footer{background:#040406;color:rgba(242,237,228,.5);padding:52px var(--pad);font-size:13px;line-height:1.9;position:relative;z-index:1}
+#bgvid{position:fixed;inset:0;z-index:0;pointer-events:none}
+#bgvid[hidden]{display:none}
+#bgvid video{width:100%;height:100%;object-fit:cover;display:block}
+#bgvid:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,0,0,.84) 0%,rgba(2,0,0,.6) 55%,rgba(2,0,0,.45) 100%)}
+main,header{position:relative;z-index:1}
 footer .frow{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-end}
 footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:.2em;font-weight:500}
 .warn{margin-top:26px;padding-top:20px;border-top:1px solid rgba(242,237,228,.12);max-width:70ch}
@@ -201,6 +206,8 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
     <a class="trade" href="#trade">Trade enquiries</a>
   </div>
 </header>
+
+<div id="bgvid" aria-hidden="true" hidden><video id="bgvidEl" muted loop playsinline></video></div>
 
 <main>
   <div class="hero" id="hero"></div>
@@ -292,6 +299,7 @@ const BRANDS = {
     spec:[["Style","Sparkling rosé"],["Formats","250 mL can &middot; 750 mL bottle"],["Launch","Late 2026"]],
     shot:"img/vanta.jpg",
     video:"img/vanta-hero.mp4",
+    bgVideo:"img/vanta-bg.mp4",
     range:[
       {img:"img/vanta.jpg",name:"Rosé 750 mL",meta:"Bottle",
        copy:"The centrepiece pour. Table service, celebrations, and anywhere a bottle needs to say something before it is opened."},
@@ -348,6 +356,16 @@ order.forEach(k=>{
 function select(k){
   const d=BRANDS[k];
   document.body.dataset.brand=k;
+
+  const bg=document.getElementById('bgvid'), bgEl=document.getElementById('bgvidEl');
+  if(d.bgVideo && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    if(bgEl.getAttribute('src')!==d.bgVideo){ bgEl.src=d.bgVideo; }
+    bg.hidden=false;
+    bgEl.play && bgEl.play().catch(()=>{});
+  } else {
+    bg.hidden=true;
+    if(bgEl.getAttribute('src')){ bgEl.removeAttribute('src'); bgEl.load(); }
+  }
   [...nav.children].forEach(b=>b.setAttribute('aria-selected', b.dataset.key===k));
 
   hero.innerHTML=`
