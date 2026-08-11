@@ -91,6 +91,7 @@ body[data-brand="onlycans"] .hero h1{text-shadow:none}
 button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .shot{position:relative;height:100%;min-height:340px;overflow:hidden}
 .shot img{width:100%;height:100%;object-fit:cover;display:block;animation:drift 16s ease-in-out infinite alternate}
+.shot video{width:100%;height:100%;object-fit:cover;display:block}
 @keyframes drift{from{transform:scale(1)}to{transform:scale(1.06)}}
 .shot:after{content:"";position:absolute;inset:0;
   background:linear-gradient(90deg,var(--bg) 0%,rgba(0,0,0,0) 34%);pointer-events:none}
@@ -290,6 +291,7 @@ const BRANDS = {
     blurb:"A sparkling rosé made for the back half of the night. Dark fruit, fine bead, and a bottle that holds the room under a low light.",
     spec:[["Style","Sparkling rosé"],["Formats","250 mL can &middot; 750 mL bottle"],["Launch","Late 2026"]],
     shot:"img/vanta.jpg",
+    video:"img/vanta-hero.mp4",
     range:[
       {img:"img/vanta.jpg",name:"Rosé 750 mL",meta:"Bottle",
        copy:"The centrepiece pour. Table service, celebrations, and anywhere a bottle needs to say something before it is opened."},
@@ -357,7 +359,9 @@ function select(k){
       <div class="spec">${d.spec.map(s=>`<div>${s[0]}<b>${s[1]}</b></div>`).join('')}</div>
       <a class="cta" href="#range">See the range</a>
     </div>
-    <div class="shot fade"><img src="${d.shot}" alt="${d.name}"></div>`;
+    <div class="shot fade">${d.video && !matchMedia('(prefers-reduced-motion: reduce)').matches
+      ? `<video src="${d.video}" poster="${d.shot}" autoplay muted loop playsinline aria-label="${d.name}"></video>`
+      : `<img src="${d.shot}" alt="${d.name}">`}</div>`;
 
   const half=Array.from({length:6},()=>`<span><i>${d.name}</i>${d.tag}</span>`).join('');
   document.getElementById('marq').innerHTML=half+half;
