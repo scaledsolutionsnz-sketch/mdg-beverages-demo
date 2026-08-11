@@ -298,7 +298,6 @@ const BRANDS = {
     blurb:"A sparkling rosé made for the back half of the night. Dark fruit, fine bead, and a bottle that holds the room under a low light.",
     spec:[["Style","Sparkling rosé"],["Formats","250 mL can &middot; 750 mL bottle"],["Launch","Late 2026"]],
     shot:"img/vanta.jpg",
-    video:"img/vanta-hero.mp4",
     bgVideo:"img/vanta-bg.mp4",
     range:[
       {img:"img/vanta.jpg",name:"Rosé 750 mL",meta:"Bottle",
@@ -377,9 +376,7 @@ function select(k){
       <div class="spec">${d.spec.map(s=>`<div>${s[0]}<b>${s[1]}</b></div>`).join('')}</div>
       <a class="cta" href="#range">See the range</a>
     </div>
-    <div class="shot fade">${d.video && !matchMedia('(prefers-reduced-motion: reduce)').matches
-      ? `<video src="${d.video}" poster="${d.shot}" autoplay muted loop playsinline aria-label="${d.name}"></video>`
-      : `<img src="${d.shot}" alt="${d.name}">`}</div>`;
+    <div class="shot fade"><img src="${d.shot}" alt="${d.name}"></div>`;
 
   const half=Array.from({length:6},()=>`<span><i>${d.name}</i>${d.tag}</span>`).join('');
   document.getElementById('marq').innerHTML=half+half;
