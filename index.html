@@ -92,6 +92,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .shot{position:relative;height:100%;min-height:340px;overflow:hidden}
 .shot img{width:100%;height:100%;object-fit:cover;display:block;animation:drift 16s ease-in-out infinite alternate}
 .shot video{width:100%;height:100%;object-fit:cover;display:block}
+body.bgvid-on .shot img{display:none}
 @keyframes drift{from{transform:scale(1)}to{transform:scale(1.06)}}
 .shot:after{content:"";position:absolute;inset:0;
   background:linear-gradient(90deg,var(--bg) 0%,rgba(0,0,0,0) 34%);pointer-events:none}
@@ -360,9 +361,11 @@ function select(k){
   if(d.bgVideo && !matchMedia('(prefers-reduced-motion: reduce)').matches){
     if(bgEl.getAttribute('src')!==d.bgVideo){ bgEl.src=d.bgVideo; }
     bg.hidden=false;
+    document.body.classList.add('bgvid-on');
     bgEl.play && bgEl.play().catch(()=>{});
   } else {
     bg.hidden=true;
+    document.body.classList.remove('bgvid-on');
     if(bgEl.getAttribute('src')){ bgEl.removeAttribute('src'); bgEl.load(); }
   }
   [...nav.children].forEach(b=>b.setAttribute('aria-selected', b.dataset.key===k));
