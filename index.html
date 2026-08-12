@@ -289,6 +289,7 @@ const BRANDS = {
     spec:[["Style","Sparkling mimosa"],["Size","250 mL"],["ABV","7%"]],
     shot:"img/solara.jpg",
     bgVideo:"img/solara-bg.mp4",
+    shotVideo:"img/solara-shot.mp4",
     range:[
       {img:"img/solara.jpg",name:"Sparkling Mimosa",meta:"250 mL &middot; 7%",
        copy:"Citrus forward, dry finish, no syrup hangover. Serve it cold and straight from the can, or over ice with a wedge of blood orange."}
@@ -380,7 +381,9 @@ function select(k){
       <div class="spec">${d.spec.map(s=>`<div>${s[0]}<b>${s[1]}</b></div>`).join('')}</div>
       <a class="cta" href="#range">See the range</a>
     </div>
-    <div class="shot fade"><img src="${d.shot}" alt="${d.name}"></div>`;
+    <div class="shot fade">${d.shotVideo && !matchMedia('(prefers-reduced-motion: reduce)').matches
+      ? `<video src="${d.shotVideo}" poster="${d.shot}" autoplay muted loop playsinline></video>`
+      : `<img src="${d.shot}" alt="${d.name}">`}</div>`;
 
   const half=Array.from({length:6},()=>`<span><i>${d.name}</i>${d.tag}</span>`).join('');
   document.getElementById('marq').innerHTML=half+half;
