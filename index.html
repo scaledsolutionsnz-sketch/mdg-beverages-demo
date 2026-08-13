@@ -171,6 +171,19 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 
 /* ---------- single-product showcase ---------- */
 .solo{position:relative;min-height:clamp(600px,78vh,780px);padding-left:clamp(0px,4vw,76px)}
+/* two wheels side by side */
+.wheels{position:absolute;left:clamp(0px,2vw,30px);top:50%;transform:translateY(-50%);
+  width:min(720px,54vw);display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,2vw,30px)}
+.wheels .orbit{position:relative;left:auto;top:auto;transform:none;width:100%;
+  height:clamp(380px,38vw,510px);--gh:clamp(180px,20vw,290px)}
+.wheels .bub{max-width:150px;left:50%;right:auto;transform:translate(-50%,6px);text-align:center}
+.wheels .orbit.sel .bub{transform:translate(-50%,0)}
+.wheels .bub.t1{top:0}
+.wheels .bub.t2{bottom:-2%}
+.wheels .bub .dot{display:none}
+@media(max-width:900px){.wheels{position:relative;left:auto;top:auto;transform:none;width:100%;
+  grid-template-columns:1fr;gap:40px}}
+
 /* floating product pair (angles swap every few seconds) */
 .floatrow{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,70px);align-items:end;
   padding:clamp(10px,3vw,40px) 0 0}
@@ -534,11 +547,26 @@ const BRANDS = {
     spec:[["Style","Sparkling rosé"],["Formats","250 mL can &middot; 750 mL bottle"],["Launch","Late 2026"]],
     shot:"img/vanta.jpg",
     bgVideo:"img/vanta-bg.mp4",
-    floats:[
-      {name:"Ros&eacute; 750 mL", meta:"Bottle &middot; the centrepiece pour",
-       angles:["img/v-bottle-2.png","img/v-bottle-1.png","img/v-bottle-3.png"]},
-      {name:"Ros&eacute; 250 mL", meta:"Can &middot; no ice bucket required",
-       angles:["img/v-can-1.png","img/v-can-2.png","img/v-can-3.png"]}
+    wheels:[
+      { bubbles:[{cls:"t1",t:"Dark fruit",d:"Berry depth, no sweetness"},
+                 {cls:"t2",t:"Fine bead",d:"Slow, persistent sparkle"}],
+        angles:[{src:"img/v-bottle-2.png",cls:"o1",alt:"Vanta bottle, front"},
+                {src:"img/v-bottle-1.png",cls:"o2",alt:"Vanta bottle, high angle"},
+                {src:"img/v-bottle-3.png",cls:"o3",alt:"Vanta bottle, low angle"}] },
+      { bubbles:[{cls:"t1",t:"Same liquid",d:"Nothing lost in the can"},
+                 {cls:"t2",t:"No glass",d:"Festivals, poolside, anywhere"}],
+        angles:[{src:"img/v-can-1.png",cls:"o1",alt:"Vanta can, front"},
+                {src:"img/v-can-2.png",cls:"o2",alt:"Vanta can, high angle"},
+                {src:"img/v-can-3.png",cls:"o3",alt:"Vanta can, low angle"}] }
+    ],
+    panels:[
+      {cls:"p1", title:"Sparkling Ros&eacute;",
+       list:["Dark berry fruit","Fine, persistent bead","Dry finish","Bottle and can"],
+       meters:[["Berry",80],["Dry",70],["Sweet",26]],
+       tag:"Sparkling ros&eacute;", right:"250 mL &middot; 750 mL"},
+      {cls:"p2", title:"How to serve",
+       list:["Cold, in a proper glass","Table service and celebrations","The back half of the night"],
+       tag:"Serve", right:"Tonight we Vanta."}
     ],
     range:[
       {img:"img/vanta.jpg",render:"img/vanta-bottle-render.png",name:"Rosé 750 mL",meta:"Bottle",
@@ -621,8 +649,10 @@ function wireShop(){
 }
 
 function wireGallery(){
-  const gal = document.getElementById('orbit');
-  if(!gal) return;
+  document.querySelectorAll('.orbit').forEach(initWheel);
+}
+
+function initWheel(gal){
   const items = [...gal.querySelectorAll('.gitem')];
   if(!items.length) return;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -657,7 +687,10 @@ function wireGallery(){
   const bubs = [...gal.querySelectorAll('.bub')];
   const leadSvg = gal.querySelector('.leads');
   const leadLines = leadSvg ? [...leadSvg.querySelectorAll('line')] : [];
-  const aim = [{side:'right',fx:.20,fy:.26},{side:'right',fx:.22,fy:.74},{side:'left',fx:.82,fy:.07}];
+  const stacked = gal.closest('.wheels') !== null;
+  const aim = stacked
+    ? [{side:'center',fx:.5,fy:.04},{side:'center',fx:.5,fy:.96}]
+    : [{side:'right',fx:.20,fy:.26},{side:'right',fx:.22,fy:.74},{side:'left',fx:.82,fy:.07}];
 
   function drawLeads(){
     if(!leadLines.length) return;
@@ -666,8 +699,8 @@ function wireGallery(){
     bubs.forEach((bub,k)=>{
       const l = leadLines[k], a = aim[k]; if(!l || !a) return;
       const r = bub.getBoundingClientRect();
-      const x1 = (a.side === 'right' ? r.right + 4 : r.left - 4) - g.left;
-      const y1 = r.top - g.top + 9;
+      const x1 = (a.side === 'center' ? (r.left + r.width/2) : a.side === 'right' ? r.right + 4 : r.left - 4) - g.left;
+      const y1 = (a.side === 'center' ? (k === 0 ? r.bottom + 4 : r.top - 4) : r.top + 9) - g.top;
       const x2 = c.left - g.left + c.width * a.fx;
       const y2 = c.top - g.top + c.height * a.fy;
       l.setAttribute('x1',x1.toFixed(1)); l.setAttribute('y1',y1.toFixed(1));
@@ -789,6 +822,19 @@ order.forEach(k=>{
   nav.appendChild(b);
 });
 
+function panelsHTML(d,k){
+  return `${(d.panels||[]).map(p=>`
+        <div class="spec-card ${p.cls}">
+          <h4>${p.title}</h4>
+          <ul>${p.list.map(li=>`<li>${li}</li>`).join('')}</ul>
+          ${p.meters?`<div class="meters">${p.meters.map(m=>`
+            <div class="meter"><span>${m[0]}</span><i style="--v:${m[1]}%"></i></div>`).join('')}</div>`:''}
+          <div class="spec-foot"><span>${p.tag}</span><span>${p.right}</span></div>
+          ${p.cls === 'p1' ? `<a class="buy" style="margin:0 0 18px" data-shop="${k}" data-buy="Buy ${d.name}" href="#"><span class="shop-label">Buy ${d.name}</span></a>` : ''}
+        </div>`).join('')}
+      <span class="solo-sig" aria-hidden="true">${d.name}<br>2026</span>`;
+}
+
 function select(k){
   const d=BRANDS[k];
   document.body.dataset.brand=k;
@@ -829,7 +875,19 @@ function select(k){
       <div><h2>The ${d.name} range</h2></div>
       <a class="cta" style="margin:0" data-shop="${k}" data-buy="Buy ${d.name}" href="#"><span class="shop-label">Buy ${d.name}</span></a>
     </div>
-    ${d.floats ? `
+    ${d.wheels ? `
+    <div class="solo">
+      <div class="wheels">
+      ${d.wheels.map(w=>`
+      <div class="orbit">
+        ${(w.bubbles||[]).map(x=>`<figure class="bub ${x.cls}"><span class="dot" aria-hidden="true"></span><b>${x.t}</b><span>${x.d}</span></figure>`).join('')}
+        <svg class="leads" width="100%" height="100%" aria-hidden="true">${(w.bubbles||[]).map(()=>'<line/>').join('')}</svg>
+        ${w.angles.map(a=>`
+        <figure class="gitem ${a.cls}"><span class="ring" aria-hidden="true"></span><img src="${a.src}" alt="${a.alt}" loading="lazy"></figure>`).join('')}
+      </div>`).join('')}
+      </div>
+      ${panelsHTML(d,k)}
+    </div>` : d.floats ? `
     <div class="floatrow">
       ${d.floats.map((f,fi)=>`
       <figure class="floater" style="--delay:${fi*1.9}s">
