@@ -162,12 +162,12 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 .solo{position:relative;min-height:clamp(600px,78vh,780px);padding-left:clamp(0px,4vw,76px)}
 /* rolling gallery: equal-size cans, front one largest, pauses on hover */
 .orbit{position:absolute;left:clamp(0px,2vw,32px);top:50%;transform:translateY(-50%);
-  width:min(820px,62vw);height:clamp(360px,40vw,500px)}
+  width:min(700px,52vw);height:clamp(380px,42vw,540px)}
 .gitem{position:absolute;left:50%;top:50%;will-change:transform,opacity;
   transform:translate(-50%,-50%);cursor:pointer}
 .gitem img{height:var(--gh);width:auto;display:block;
   filter:drop-shadow(0 26px 32px rgba(0,0,0,.62))}
-.orbit{--gh:clamp(170px,23vw,290px)}
+.orbit{--gh:clamp(200px,27vw,340px)}
 .orbit::after{content:"";position:absolute;inset:-6%;pointer-events:none;
   background:color-mix(in srgb, var(--bg) 88%, transparent);opacity:1;transition:opacity 1.1s ease}
 .orbit.lifted::after{opacity:0}
@@ -477,28 +477,43 @@ function wireGallery(){
   const items = [...gal.querySelectorAll('.gitem')];
   if(!items.length) return;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let t = 0, last = performance.now(), paused = false, onScreen = true, hovered = -1;
+  const accent = getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#fff';
+  const outline = `drop-shadow(1.6px 0 0 ${accent}) drop-shadow(-1.6px 0 0 ${accent}) drop-shadow(0 1.6px 0 ${accent}) drop-shadow(0 -1.6px 0 ${accent})`;
+  const n = items.length;
+  let t = 0, last = performance.now(), onScreen = true, hovered = -1, target = null;
 
   items.forEach((el,i)=>{
     el.addEventListener('pointerenter',()=>hovered=i);
-    el.addEventListener('pointerleave',()=>hovered=-1);
+    el.addEventListener('pointerleave',()=>{ if(hovered===i) hovered=-1; });
+    el.addEventListener('click',()=>{
+      // spin the shortest way round so this can lands at the front
+      let want = -i/n;
+      while(want < t) want += 1;
+      if(want - t > 0.5) want -= 1;
+      target = want;
+    });
   });
-  gal.addEventListener('pointerenter',()=>paused=true);
-  gal.addEventListener('pointerleave',()=>paused=false);
   new IntersectionObserver(es=>es.forEach(e=>onScreen=e.isIntersecting),{threshold:.05}).observe(gal);
 
   function frame(now){
     const dt = Math.min((now-last)/1000, .05); last = now;
-    if(!paused && onScreen && !reduce) t += dt * 0.075;   // revolutions per second
-    const rx = gal.clientWidth * 0.36, ry = gal.clientHeight * 0.155;
+    if(!reduce && onScreen){
+      if(target !== null){
+        t += (target - t) * Math.min(1, dt * 5.5);        // ease into the clicked can
+        if(Math.abs(target - t) < 0.0015){ t = target; target = null; }
+      } else if(hovered === -1){
+        t += dt * 0.075;                                   // free rotation
+      }
+    }
+    const rx = gal.clientWidth * 0.27, ry = gal.clientHeight * 0.135;
     items.forEach((el,i)=>{
-      const a = (t + i/items.length) * Math.PI * 2;
-      const depth = (Math.cos(a) + 1) / 2;                // 0 back, 1 front
-      const s = 0.70 + depth * 0.30 + (hovered===i ? .05 : 0);
+      const a = (t + i/n) * Math.PI * 2;
+      const depth = (Math.cos(a) + 1) / 2;                 // 0 back, 1 front
+      const s = 0.72 + depth * 0.28 + (hovered===i ? .04 : 0);
       el.style.transform = `translate(-50%,-50%) translate(${(Math.sin(a)*rx).toFixed(1)}px, ${(-Math.cos(a)*ry).toFixed(1)}px) scale(${s.toFixed(3)})`;
-      el.style.zIndex = 10 + Math.round(depth*100);
-      el.style.opacity = (0.74 + depth*0.26).toFixed(3);
-      el.style.filter = `brightness(${(0.80 + depth*0.20).toFixed(3)})`;
+      el.style.zIndex = 10 + Math.round(depth*100) + (hovered===i ? 200 : 0);
+      el.style.opacity = (0.76 + depth*0.24).toFixed(3);
+      el.style.filter = `brightness(${(0.82 + depth*0.18).toFixed(3)})` + (hovered===i ? ' ' + outline : '');
     });
     requestAnimationFrame(frame);
   }
