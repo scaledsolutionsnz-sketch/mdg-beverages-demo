@@ -182,25 +182,6 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 @media(max-width:900px){.bub{display:none}}
 
 /* crack-open + mist */
-.fx{position:absolute;left:50%;top:2%;width:120px;height:120px;transform:translate(-50%,-50%);
-  pointer-events:none;opacity:0;transition:opacity .35s ease}
-.gitem.open .fx{opacity:1}
-.fx i{position:absolute;left:50%;bottom:0;width:40px;height:40px;border-radius:50%;
-  background:radial-gradient(circle, rgba(255,255,255,.92) 0%, rgba(255,246,236,.42) 48%, transparent 74%);
-  filter:blur(8px);opacity:0}
-.gitem.open .fx i{animation:mistUp 2.8s ease-out infinite;animation-delay:var(--d)}
-.fx i:nth-child(1){--d:0s;--dx:-16px}
-.fx i:nth-child(2){--d:.5s;--dx:12px}
-.fx i:nth-child(3){--d:1s;--dx:-6px}
-.fx i:nth-child(4){--d:1.6s;--dx:20px}
-.fx i:nth-child(5){--d:2.1s;--dx:-22px}
-.fx i:nth-child(6){--d:.85s;--dx:26px}
-.fx i:nth-child(7){--d:1.35s;--dx:-30px}
-@keyframes mistUp{
-  0%{opacity:0;transform:translate(-50%,6px) scale(.4)}
-  18%{opacity:.82}
-  55%{opacity:.5}
-  100%{opacity:0;transform:translate(calc(-50% + var(--dx)),-120px) scale(2.4)}}
 .ring{position:absolute;left:50%;top:4%;width:62px;height:18px;transform:translate(-50%,-50%);
   border:2px solid var(--fg);border-radius:50%;opacity:0;pointer-events:none;
   box-shadow:0 0 12px color-mix(in srgb, var(--fg) 45%, transparent)}
@@ -209,7 +190,7 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
   100%{opacity:0;transform:translate(-50%,-50%) scale(2.1)}}
 .gitem.open img{animation:canPop .5s cubic-bezier(.2,.8,.2,1) 1}
 @keyframes canPop{0%{transform:translateY(0)}34%{transform:translateY(-9px)}100%{transform:translateY(0)}}
-@media (prefers-reduced-motion:reduce){.gitem.open .fx i,.gitem.open .ring,.gitem.open img{animation:none}}
+@media (prefers-reduced-motion:reduce){.gitem.open .ring,.gitem.open img{animation:none}}
 
 /* rolling gallery: equal-size cans, front one largest, pauses on hover */
 .orbit{position:absolute;left:clamp(0px,2vw,32px);top:50%;transform:translateY(-50%);
@@ -755,7 +736,7 @@ function select(k){
         <figure class="bub ${x.cls}"><span class="dot" aria-hidden="true"></span><b>${x.t}</b><span>${x.d}</span></figure>`).join('')}
         <svg class="leads" width="100%" height="100%" aria-hidden="true">${(d.bubbles||[]).map(()=>'<line/>').join('')}</svg>
         ${d.angles.map(a=>`
-        <figure class="gitem ${a.cls}"><span class="ring" aria-hidden="true"></span><span class="fx" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><img src="${a.src}" alt="${a.alt}" loading="lazy"></figure>`).join('')}
+        <figure class="gitem ${a.cls}"><span class="ring" aria-hidden="true"></span><img src="${a.src}" alt="${a.alt}" loading="lazy"></figure>`).join('')}
       </div>
       ${d.panels.map(p=>`
         <div class="spec-card ${p.cls}">
