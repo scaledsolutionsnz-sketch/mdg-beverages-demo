@@ -104,6 +104,17 @@ body[data-brand="onlycans"] .hero h1{text-shadow:none}
 .cta{display:inline-block;margin-top:38px;padding:15px 34px;border:1px solid var(--accent);color:var(--accent);
   font-size:11px;letter-spacing:.24em;text-transform:uppercase;text-decoration:none;transition:.25s}
 .cta:hover{background:var(--accent);color:var(--bg)}
+.cta.solid{background:var(--accent);color:var(--bg)}
+.cta.solid:hover{filter:brightness(1.08)}
+.cta.soon,.buy.soon{opacity:.6;cursor:default;border-style:dashed}
+.cta.soon:hover{background:transparent;color:var(--accent)}
+.buy{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:11px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--accent);text-decoration:none;
+  border-bottom:1px solid color-mix(in srgb, var(--accent) 45%, transparent);padding-bottom:3px;
+  transition:color .25s,border-color .25s}
+.buy:hover{color:var(--fg);border-color:var(--fg)}
+.buy.soon:hover{color:var(--accent);border-color:color-mix(in srgb, var(--accent) 45%, transparent)}
+.shop-note{margin-top:26px;font-size:12px;line-height:1.7;color:var(--muted);max-width:44ch}
 .cta:active{transform:translateY(1px)}
 button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .shot{position:relative;height:100%;min-height:340px;overflow:hidden}
@@ -160,6 +171,28 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 
 /* ---------- single-product showcase ---------- */
 .solo{position:relative;min-height:clamp(600px,78vh,780px);padding-left:clamp(0px,4vw,76px)}
+/* floating product pair (angles swap every few seconds) */
+.floatrow{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,70px);align-items:end;
+  padding:clamp(10px,3vw,40px) 0 0}
+.floater{position:relative;margin:0;text-align:center}
+.floater .stage{position:relative;height:clamp(300px,38vw,520px);
+  animation:floatBob 7s ease-in-out infinite alternate;animation-delay:var(--delay,0s)}
+@keyframes floatBob{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+.floater .stage img{position:absolute;inset:0;margin:auto;max-height:100%;width:auto;
+  object-fit:contain;opacity:0;transition:opacity 1.1s ease;
+  filter:drop-shadow(0 34px 40px rgba(0,0,0,.62))}
+.floater .stage img.show{opacity:1}
+.floater .shadow{position:absolute;left:50%;bottom:-14px;width:46%;height:16px;transform:translateX(-50%);
+  border-radius:50%;background:radial-gradient(ellipse, rgba(0,0,0,.55), transparent 70%);
+  filter:blur(7px);animation:shadowPulse 7s ease-in-out infinite alternate;animation-delay:var(--delay,0s)}
+@keyframes shadowPulse{from{opacity:.6;transform:translateX(-50%) scale(1)}
+  to{opacity:.35;transform:translateX(-50%) scale(.88)}}
+.floater figcaption{margin-top:30px}
+.floater h3{font-family:var(--display);font-size:22px;font-weight:400;margin:0}
+.floater p{margin:8px 0 0;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.floater .stage,.floater .shadow{animation:none}}
+@media(max-width:760px){.floatrow{grid-template-columns:1fr;gap:56px}}
+
 /* ingredient callouts */
 .bub{position:absolute;z-index:6;pointer-events:none;margin:0;max-width:190px;
   opacity:0;transform:translateY(6px);transition:opacity .5s ease,transform .5s ease}
@@ -362,6 +395,7 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
   <div class="bar">
     <button class="house" type="button" id="homeBtn" aria-label="MDG Beverages home"><div><b>MDG</b><span>Beverages</span></div></button>
     <nav id="nav" role="tablist" aria-label="Brands"></nav>
+    <a class="trade" data-shop="store" data-buy="Shop" href="#"><span class="shop-label">Shop</span></a>
     <a class="trade" href="#trade">Trade enquiries</a>
   </div>
 </header>
@@ -407,6 +441,7 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
         <div class="reveal">
           <p>Bars, bottle stores, distributors and event buyers. Tell us what you need and where you are, and we will come back with pricing and availability.</p>
           <p>For anything else, including media and collaborations, use the same form and pick the reason that fits.</p>
+          <p class="shop-note">Our online store is being built now. Every buy button on this site is already in place and will point straight at it the day it opens.</p>
         </div>
         <div class="reveal">
           <form id="enq">
@@ -440,6 +475,26 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
 </footer>
 
 <script>
+/* ─────────────────────────────────────────────────────────────
+   SHOPIFY LINKS — paste the store URLs here when the shop is live.
+   Leave a value empty ("") and its button shows "Store opening soon"
+   instead of linking anywhere.
+
+     store   : the shop home / all-products page
+     <brand> : that brand's collection or product page
+
+   Example once ready:
+     store:  "https://shop.mdgbeverages.co.nz",
+     solara: "https://shop.mdgbeverages.co.nz/collections/solara",
+   ───────────────────────────────────────────────────────────── */
+const SHOP = {
+  store:    "",
+  solara:   "",
+  vanta:    "",
+  onlycans: "",
+  divot:    ""
+};
+
 const BRANDS = {
   solara: {
     name:"Solara", accent:"Sparkling mimosa", italic:null,
@@ -479,6 +534,12 @@ const BRANDS = {
     spec:[["Style","Sparkling rosé"],["Formats","250 mL can &middot; 750 mL bottle"],["Launch","Late 2026"]],
     shot:"img/vanta.jpg",
     bgVideo:"img/vanta-bg.mp4",
+    floats:[
+      {name:"Ros&eacute; 750 mL", meta:"Bottle &middot; the centrepiece pour",
+       angles:["img/v-bottle-2.png","img/v-bottle-1.png","img/v-bottle-3.png"]},
+      {name:"Ros&eacute; 250 mL", meta:"Can &middot; no ice bucket required",
+       angles:["img/v-can-1.png","img/v-can-2.png","img/v-can-3.png"]}
+    ],
     range:[
       {img:"img/vanta.jpg",render:"img/vanta-bottle-render.png",name:"Rosé 750 mL",meta:"Bottle",
        copy:"The centrepiece pour. Table service, celebrations, and anywhere a bottle needs to say something before it is opened."},
@@ -522,6 +583,42 @@ const BRANDS = {
 new IntersectionObserver(es=>{
   es.forEach(e=>document.body.classList.toggle('spot-on', e.isIntersecting));
 },{threshold:.28}).observe(document.getElementById('range'));
+
+function wireFloats(){
+  if(window.__floatTimer) clearInterval(window.__floatTimer);
+  const stages = [...document.querySelectorAll('.floater .stage')];
+  if(!stages.length) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const idx = stages.map(()=>0);
+  let tick = 0;
+  window.__floatTimer = setInterval(()=>{
+    stages.forEach((st,si)=>{
+      if((tick + si) % 2 !== 0) return;               // stagger so they never swap together
+      const imgs = [...st.querySelectorAll('img')];
+      imgs[idx[si]].classList.remove('show');
+      idx[si] = (idx[si] + 1) % imgs.length;
+      imgs[idx[si]].classList.add('show');
+    });
+    tick++;
+  }, 2200);
+}
+
+function wireShop(){
+  document.querySelectorAll('[data-shop]').forEach(el=>{
+    const url = SHOP[el.dataset.shop] || '';
+    const label = el.querySelector('.shop-label') || el;
+    if(url){
+      el.href = url; el.target = '_blank'; el.rel = 'noopener';
+      el.classList.remove('soon'); el.removeAttribute('aria-disabled');
+      label.textContent = el.dataset.buy || 'Buy online';
+    } else {
+      el.href = '#'; el.removeAttribute('target');
+      el.classList.add('soon'); el.setAttribute('aria-disabled','true');
+      label.textContent = 'Store opening soon';
+      el.onclick = ev => ev.preventDefault();
+    }
+  });
+}
 
 function wireGallery(){
   const gal = document.getElementById('orbit');
@@ -649,7 +746,8 @@ function selectHouse(){
       <p class="tag">${HOUSE.tag}</p>
       <p class="blurb">${HOUSE.blurb}</p>
       <div class="spec">${HOUSE.spec.map(x=>`<div>${x[0]}<b>${x[1]}</b></div>`).join('')}</div>
-      <a class="cta" href="#range">See the brands</a>
+      <a class="cta solid" data-shop="store" data-buy="Shop the range" href="#"><span class="shop-label">Shop the range</span></a>
+      <a class="cta" href="#range" style="margin-left:10px">See the brands</a>
     </div>
     <div class="shot fade"><div class="hero-quad">${order.map(k=>`
       <a href="#range" data-goto="${k}" aria-label="${BRANDS[k].name}"><img src="${BRANDS[k].shot}" alt="${BRANDS[k].name}"><b>${BRANDS[k].name}</b></a>`).join('')}</div></div>`;
@@ -671,6 +769,7 @@ function selectHouse(){
         <span class="bx-go">View the range</span>
       </a>`;}).join('')}</div>`;
 
+  wireShop();
   document.querySelectorAll('[data-goto]').forEach(a=>{
     a.addEventListener('click', ev=>{ ev.preventDefault(); select(a.dataset.goto);
       document.getElementById('top') ? window.scrollTo({top:0,behavior:'smooth'}) : null; });
@@ -715,7 +814,8 @@ function select(k){
       <p class="tag">${d.tag}</p>
       <p class="blurb">${d.blurb}</p>
       <div class="spec">${d.spec.map(s=>`<div>${s[0]}<b>${s[1]}</b></div>`).join('')}</div>
-      <a class="cta" href="#range">See the range</a>
+      <a class="cta solid" data-shop="${k}" data-buy="Buy ${d.name}" href="#"><span class="shop-label">Buy ${d.name}</span></a>
+      <a class="cta" href="#range" style="margin-left:10px">See the range</a>
     </div>
     <div class="shot fade">${d.shotVideo && !matchMedia('(prefers-reduced-motion: reduce)').matches
       ? `<video src="${d.shotVideo}" poster="${d.shot}" autoplay muted loop playsinline></video>`
@@ -727,9 +827,19 @@ function select(k){
   range.innerHTML=`
     <div class="sechead">
       <div><h2>The ${d.name} range</h2></div>
-      <a class="cta" style="margin:0" href="#trade">Stock ${d.name}</a>
+      <a class="cta" style="margin:0" data-shop="${k}" data-buy="Buy ${d.name}" href="#"><span class="shop-label">Buy ${d.name}</span></a>
     </div>
-    ${d.angles ? `
+    ${d.floats ? `
+    <div class="floatrow">
+      ${d.floats.map((f,fi)=>`
+      <figure class="floater" style="--delay:${fi*1.9}s">
+        <div class="stage">${f.angles.map((src,ai)=>`<img class="fimg${ai===0?' show':''}" src="${src}" alt="${f.name}" loading="lazy">`).join('')}</div>
+        <span class="shadow" aria-hidden="true"></span>
+        <figcaption><h3>${f.name}</h3><p>${f.meta}</p>
+          <a class="buy" data-shop="${k}" data-buy="Buy ${d.name}" href="#"><span class="shop-label">Buy ${d.name}</span></a>
+        </figcaption>
+      </figure>`).join('')}
+    </div>` : d.angles ? `
     <div class="solo">
       <div class="orbit" id="orbit">
         ${(d.bubbles||[]).map(x=>`
@@ -745,6 +855,7 @@ function select(k){
           ${p.meters?`<div class="meters">${p.meters.map(m=>`
             <div class="meter"><span>${m[0]}</span><i style="--v:${m[1]}%"></i></div>`).join('')}</div>`:''}
           <div class="spec-foot"><span>${p.tag}</span><span>${p.right}</span></div>
+          ${p.cls === 'p1' ? `<a class="buy" style="margin:0 0 18px" data-shop="${k}" data-buy="Buy ${d.name}" href="#"><span class="shop-label">Buy ${d.name}</span></a>` : ''}
         </div>`).join('')}
       <span class="solo-sig" aria-hidden="true">${d.name}<br>2026</span>
     </div>` : `
@@ -762,6 +873,7 @@ function select(k){
               <h3>${r.name}</h3>
               <p class="meta">${r.meta}</p>
               <p class="copy">${r.copy}</p>
+              <a class="buy" data-shop="${k}" data-buy="Buy this" href="#"><span class="shop-label">Buy this</span></a>
             </div>
           </div>
         </article>`).join('')}</div>
@@ -771,8 +883,11 @@ function select(k){
 
   wireRenders();
   wireGallery();
+  wireFloats();
+  wireShop();
 }
 selectHouse();
+wireShop();
 document.getElementById('homeBtn').addEventListener('click', ()=>{ selectHouse(); window.scrollTo({top:0,behavior:'smooth'}); });
 
 const gate=document.getElementById('gate');
