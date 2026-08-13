@@ -120,6 +120,17 @@ section{padding:clamp(56px,8vw,110px) var(--pad)}
 .card .pic{aspect-ratio:4/3;overflow:hidden;background:#000}
 .card .pic img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
 .card:hover .pic img{transform:scale(1.04)}
+.card .pic.pic-render{display:flex;align-items:center;justify-content:center;position:relative;
+  background:radial-gradient(62% 74% at 50% 62%, rgba(236,0,140,.22), transparent 72%), #050004}
+.card .pic.pic-render img.prod{max-height:86%;width:auto;height:86%;object-fit:contain;background:none;
+  filter:drop-shadow(0 34px 46px rgba(0,0,0,.65));will-change:transform;
+  transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.card:hover .pic-render .prod{transform:none}
+.pic-render::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg, rgba(2,0,0,.9) 0%, rgba(2,0,0,.45) 100%);
+  opacity:1;transition:opacity 1s ease}
+.pic-render.lifted::after{opacity:0}
+@media (prefers-reduced-motion:reduce){.pic-render::after{opacity:0}.pic-render .prod{transition:none}}
 .card .txt{padding:24px 24px 0}
 .card h3{font-family:var(--display);font-size:24px;font-weight:400;margin:10px 0 0}
 .card p{font-size:14px;line-height:1.7;color:var(--muted);margin:12px 0 0}
@@ -302,9 +313,9 @@ const BRANDS = {
     shot:"img/vanta.jpg",
     bgVideo:"img/vanta-bg.mp4",
     range:[
-      {img:"img/vanta.jpg",name:"Rosé 750 mL",meta:"Bottle",
+      {img:"img/vanta.jpg",render:"img/vanta-bottle-render.png",name:"Rosé 750 mL",meta:"Bottle",
        copy:"The centrepiece pour. Table service, celebrations, and anywhere a bottle needs to say something before it is opened."},
-      {img:"img/vanta-can.jpg",name:"Rosé 250 mL",meta:"Can",
+      {img:"img/vanta-can.jpg",render:"img/vanta-can-render.png",name:"Rosé 250 mL",meta:"Can",
        copy:"The same liquid, no ice bucket required. Built for festivals, poolside and anywhere glass is not welcome."}
     ]
   },
@@ -340,6 +351,26 @@ const BRANDS = {
     ]
   }
 };
+
+function wireRenders(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.pic-render').forEach(pic=>{
+    // overlay lifts as the card scrolls into view
+    new IntersectionObserver((es,io)=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('lifted'); io.unobserve(e.target); } });
+    },{threshold:.35}).observe(pic);
+    if(reduce) return;
+    // bottle / can follows the cursor
+    const prod = pic.querySelector('.prod');
+    pic.addEventListener('pointermove', ev=>{
+      const b = pic.getBoundingClientRect();
+      const x = (ev.clientX - b.left) / b.width - .5;
+      const y = (ev.clientY - b.top) / b.height - .5;
+      prod.style.transform = `perspective(700px) rotateY(${x*16}deg) rotateX(${y*-12}deg) translate(${x*14}px, ${y*10}px) scale(1.05)`;
+    });
+    pic.addEventListener('pointerleave', ()=>{ prod.style.transform=''; });
+  });
+}
 
 const order = ["solara","vanta","onlycans","divot"];
 const nav = document.getElementById('nav');
@@ -394,11 +425,15 @@ function select(k){
     </div>
     <div class="grid">${d.range.map((r,idx)=>`
       <article class="card fade" style="animation-delay:${idx*90}ms">
-        <div class="pic"><img src="${r.img}" alt="${r.name}" loading="lazy"></div>
+        <div class="pic${r.render?' pic-render':''}">${r.render
+          ? `<img class="prod" src="${r.render}" alt="${r.name}" loading="lazy">`
+          : `<img src="${r.img}" alt="${r.name}" loading="lazy">`}</div>
         <div class="txt"><p class="meta">${r.meta}</p><h3>${r.name}</h3><p>${r.copy}</p></div>
       </article>`).join('')}</div>
     ${d.gallery?`<div class="life">${d.gallery.map((g,idx)=>`
       <figure class="fade" style="animation-delay:${180+idx*90}ms"><img src="${g.img}" alt="${g.alt}" loading="lazy"></figure>`).join('')}</div>`:''}`;
+
+  wireRenders();
 }
 select('solara');
 
