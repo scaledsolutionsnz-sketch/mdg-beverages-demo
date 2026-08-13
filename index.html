@@ -169,17 +169,17 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 .bub b{display:block;font-family:var(--body);font-size:10.5px;font-weight:600;letter-spacing:.16em;
   text-transform:uppercase;color:var(--fg);margin-bottom:3px}
 .bub span{display:block;font-size:11.5px;line-height:1.5;color:var(--muted)}
-.bub .lead{position:absolute;height:1px;background:linear-gradient(90deg,
-  color-mix(in srgb, var(--fg) 34%, transparent), color-mix(in srgb, var(--fg) 6%, transparent));
-  transform-origin:0 50%}
-.bub .lead::before{content:"";position:absolute;left:-3px;top:50%;width:5px;height:5px;border-radius:50%;
-  transform:translateY(-50%);background:var(--accent)}
-.bub.b1{left:-1%;top:16%;text-align:right}
-.bub.b1 .lead{right:-6px;top:9px;width:clamp(60px,9vw,120px);transform:translateX(100%) rotate(24deg)}
-.bub.b2{left:1%;bottom:14%;text-align:right}
-.bub.b2 .lead{right:-6px;top:9px;width:clamp(60px,8vw,104px);transform:translateX(100%) rotate(-16deg)}
-.bub.b3{right:-9%;top:13%}
-.bub.b3 .lead{left:-6px;top:9px;width:clamp(60px,8vw,112px);transform:translateX(-100%) rotate(168deg)}
+.bub .dot{position:absolute;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 8px color-mix(in srgb, var(--accent) 70%, transparent)}
+.bub.b1,.bub.b2{text-align:right}
+.bub.b1 .dot,.bub.b2 .dot{right:-9px}
+.bub.b3 .dot{left:-9px}
+.bub.b1{left:0;top:17%}
+.bub.b2{left:2%;bottom:16%}
+.bub.b3{right:-8%;top:12%}
+.leads{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;transition:opacity .5s ease}
+.orbit.sel .leads{opacity:1}
+.leads line{stroke:color-mix(in srgb, var(--fg) 30%, transparent);stroke-width:1}
 @media(max-width:900px){.bub{display:none}}
 
 /* crack-open + mist */
@@ -226,24 +226,38 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
   background:color-mix(in srgb, var(--bg) 88%, transparent);opacity:1;transition:opacity 1.1s ease}
 .orbit.lifted::after{opacity:0}
 @media (prefers-reduced-motion:reduce){.orbit::after{opacity:0}}
-.spec-card{position:absolute;width:min(268px,30vw);border:1px solid var(--rule);
-  padding:16px 18px 0;background:color-mix(in srgb, var(--bg) 62%, transparent);
-  backdrop-filter:blur(3px);z-index:3}
-.spec-card h4{font-family:var(--display);font-size:17px;font-weight:500;margin:0 0 10px}
-.spec-card ul{list-style:none;margin:0;padding:0}
-.spec-card li{font-size:12.5px;line-height:1.62;color:var(--muted)}
+.spec-card{position:absolute;width:min(290px,32vw);z-index:3;padding:20px 22px 0;
+  border:1px solid color-mix(in srgb, var(--fg) 20%, transparent);
+  background:linear-gradient(180deg,
+    color-mix(in srgb, var(--fg) 10%, transparent),
+    color-mix(in srgb, var(--fg) 4%, transparent));
+  backdrop-filter:blur(16px) saturate(1.15);
+  box-shadow:0 26px 60px -34px rgba(0,0,0,.9), inset 0 1px 0 color-mix(in srgb, var(--fg) 16%, transparent)}
+.spec-card h4{font-family:var(--display);font-size:20px;font-weight:500;margin:0 0 12px;color:var(--fg)}
+.spec-card ul{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.spec-card li{font-size:13px;line-height:1.6;color:color-mix(in srgb, var(--fg) 82%, transparent);
+  display:flex;align-items:baseline;gap:9px}
+.spec-card li::before{content:"";width:3px;height:3px;border-radius:50%;flex:0 0 auto;
+  background:color-mix(in srgb, var(--accent) 85%, transparent);transform:translateY(-2px)}
 .meters{margin-top:14px;display:grid;gap:7px}
 .meter{display:grid;grid-template-columns:52px 1fr;align-items:center;gap:10px}
-.meter span{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.meter i{position:relative;height:1px;background:var(--rule);display:block}
-.meter i::after{content:"";position:absolute;top:50%;width:6px;height:6px;border-radius:50%;
-  background:var(--accent);transform:translate(-50%,-50%);left:var(--v)}
-.spec-foot{display:flex;justify-content:space-between;gap:12px;margin-top:16px;padding:9px 0;
-  border-top:1px solid var(--rule);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.meter span{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:color-mix(in srgb, var(--fg) 66%, transparent)}
+.meter i{position:relative;height:1px;display:block;
+  background:color-mix(in srgb, var(--fg) 22%, transparent)}
+.meter i::after{content:"";position:absolute;top:50%;width:7px;height:7px;border-radius:50%;
+  background:var(--accent);transform:translate(-50%,-50%);left:var(--v);
+  box-shadow:0 0 10px color-mix(in srgb, var(--accent) 65%, transparent)}
+.spec-foot{display:flex;justify-content:space-between;gap:12px;margin-top:18px;padding:11px 0;
+  border-top:1px solid color-mix(in srgb, var(--fg) 18%, transparent);
+  font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:color-mix(in srgb, var(--fg) 70%, transparent)}
+.spec-foot span:last-child{color:var(--fg)}
 .spec-card.p1{right:4%;top:9%}
 .spec-card.p2{right:9%;bottom:7%}
 .solo-sig{position:absolute;right:2%;bottom:-6px;text-align:right;font-family:var(--display);
-  font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);line-height:1.9}
+  font-size:12px;letter-spacing:.34em;text-transform:uppercase;line-height:1.9;
+  color:color-mix(in srgb, var(--fg) 55%, transparent)}
 @media(max-width:900px){
   .solo{min-height:0;padding-left:0;display:grid;gap:22px;justify-items:center}
   .orbit{position:relative;left:auto;top:auto;transform:none;width:min(440px,92vw);height:clamp(300px,72vw,380px)}
@@ -565,6 +579,27 @@ function wireGallery(){
   document.addEventListener('click',()=>{ if(opened !== -1) closeCan(); });   // click away closes it
   new IntersectionObserver(es=>es.forEach(e=>onScreen=e.isIntersecting),{threshold:.05}).observe(gal);
 
+  const bubs = [...gal.querySelectorAll('.bub')];
+  const leadSvg = gal.querySelector('.leads');
+  const leadLines = leadSvg ? [...leadSvg.querySelectorAll('line')] : [];
+  const aim = [{side:'right',fx:.20,fy:.26},{side:'right',fx:.22,fy:.74},{side:'left',fx:.82,fy:.07}];
+
+  function drawLeads(){
+    if(!leadLines.length) return;
+    if(opened === -1){ leadLines.forEach(l=>l.setAttribute('x2', l.getAttribute('x1')||0)); return; }
+    const g = gal.getBoundingClientRect(), c = items[opened].getBoundingClientRect();
+    bubs.forEach((bub,k)=>{
+      const l = leadLines[k], a = aim[k]; if(!l || !a) return;
+      const r = bub.getBoundingClientRect();
+      const x1 = (a.side === 'right' ? r.right + 4 : r.left - 4) - g.left;
+      const y1 = r.top - g.top + 9;
+      const x2 = c.left - g.left + c.width * a.fx;
+      const y2 = c.top - g.top + c.height * a.fy;
+      l.setAttribute('x1',x1.toFixed(1)); l.setAttribute('y1',y1.toFixed(1));
+      l.setAttribute('x2',x2.toFixed(1)); l.setAttribute('y2',y2.toFixed(1));
+    });
+  }
+
   function frame(now){
     const dt = Math.min((now-last)/1000, .05); last = now;
     if(!reduce && onScreen){
@@ -587,6 +622,7 @@ function wireGallery(){
       el.style.opacity = (0.76 + depth*0.24).toFixed(3);
       el.style.filter = `brightness(${(0.82 + depth*0.18).toFixed(3)}) drop-shadow(0 24px 30px rgba(0,0,0,.6))`;
     });
+    drawLeads();
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
@@ -719,7 +755,8 @@ function select(k){
     <div class="solo">
       <div class="orbit" id="orbit">
         ${(d.bubbles||[]).map(x=>`
-        <figure class="bub ${x.cls}"><span class="lead" aria-hidden="true"></span><b>${x.t}</b><span>${x.d}</span></figure>`).join('')}
+        <figure class="bub ${x.cls}"><span class="dot" aria-hidden="true"></span><b>${x.t}</b><span>${x.d}</span></figure>`).join('')}
+        <svg class="leads" width="100%" height="100%" aria-hidden="true">${(d.bubbles||[]).map(()=>'<line/>').join('')}</svg>
         ${d.angles.map(a=>`
         <figure class="gitem ${a.cls}"><span class="ring" aria-hidden="true"></span><span class="fx" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><img src="${a.src}" alt="${a.alt}" loading="lazy"></figure>`).join('')}
       </div>
