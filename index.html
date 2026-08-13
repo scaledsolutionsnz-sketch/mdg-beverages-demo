@@ -53,7 +53,11 @@ a{color:inherit}
 header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--rule);
   transition:background .6s ease}
 .bar{display:flex;align-items:stretch;min-height:66px}
-.house{display:flex;align-items:center;padding:0 22px;border-right:1px solid var(--rule);flex:0 0 auto}
+.house{display:flex;align-items:center;padding:0 22px;border-right:1px solid var(--rule);flex:0 0 auto;
+  background:none;border-top:0;border-bottom:0;border-left:0;color:var(--fg);cursor:pointer;
+  font:inherit;text-align:left;transition:color .25s}
+.house:hover{color:var(--accent)}
+body[data-brand="house"] .house b{color:var(--accent)}
 .house b{font-family:var(--display);font-size:19px;letter-spacing:.2em;font-weight:500}
 .house span{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);display:block;margin-top:2px}
 nav{display:flex;flex:1;overflow-x:auto;scrollbar-width:none}
@@ -117,6 +121,29 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 .sechead{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
   padding-bottom:20px;border-bottom:1px solid var(--rule);margin-bottom:44px}
 .sechead h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4vw,46px);margin:8px 0 0}
+/* ---------- house home ---------- */
+.house-hero .copy{padding-right:clamp(20px,4vw,60px)}
+.hero-quad{display:grid;grid-template-columns:1fr 1fr;gap:2px;height:100%;min-height:340px}
+.hero-quad a{position:relative;overflow:hidden;display:block;background:#000}
+.hero-quad img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease,opacity .4s ease;opacity:.82}
+.hero-quad a:hover img{transform:scale(1.06);opacity:1}
+.hero-quad b{position:absolute;left:16px;bottom:14px;z-index:2;font-family:var(--display);
+  font-size:17px;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:#fff;
+  text-shadow:0 2px 18px rgba(0,0,0,.8)}
+.brandex{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
+.brandex a{display:block;text-decoration:none;color:inherit;border-top:1px solid var(--rule);padding-top:18px;
+  transition:border-color .3s}
+.brandex a:hover{border-color:var(--accent)}
+.brandex .bx-pic{aspect-ratio:4/5;overflow:hidden;background:#000;margin-bottom:16px}
+.brandex img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.brandex a:hover img{transform:scale(1.05)}
+.brandex h3{font-family:var(--display);font-size:26px;font-weight:400;margin:0}
+.brandex .bx-accent{margin-top:6px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.brandex p{font-size:13.5px;line-height:1.7;color:var(--muted);margin:12px 0 0}
+.brandex .bx-go{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--fg)}
+@media(max-width:1000px){.brandex{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.brandex{grid-template-columns:1fr}.hero-quad{min-height:260px}}
+
 /* ---------- catalogue grid ---------- */
 .cat{position:relative}
 .cat-rail{position:absolute;left:-4px;top:6px;writing-mode:vertical-rl;font-family:var(--display);
@@ -233,7 +260,7 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
 
 <header>
   <div class="bar">
-    <div class="house"><div><b>MDG</b><span>Beverages</span></div></div>
+    <button class="house" type="button" id="homeBtn" aria-label="MDG Beverages home"><div><b>MDG</b><span>Beverages</span></div></button>
     <nav id="nav" role="tablist" aria-label="Brands"></nav>
     <a class="trade" href="#trade">Trade enquiries</a>
   </div>
@@ -397,6 +424,56 @@ function wireRenders(){
   });
 }
 
+const HOUSE = {
+  name:"MDG Beverages", accent:"New Zealand drinks house",
+  tag:"Four brands, one bar cart.",
+  blurb:"Sparkling mimosa, sparkling ros&eacute;, vodka sodas and premium mixers. Each one built for the room it gets opened in, not the shelf it sits on.",
+  spec:[["Brands","Four"],["Made in","New Zealand"],["Supply","Venues &middot; retail &middot; distribution"]]
+};
+
+function selectHouse(){
+  document.body.dataset.brand = "house";
+  const bg=document.getElementById('bgvid'), bgEl=document.getElementById('bgvidEl');
+  bg.hidden=true; document.body.classList.remove('bgvid-on');
+  if(bgEl.getAttribute('src')){ bgEl.removeAttribute('src'); bgEl.load(); }
+  [...nav.children].forEach(b=>b.setAttribute('aria-selected','false'));
+
+  hero.className = 'hero house-hero';
+  hero.innerHTML = `
+    <div class="copy fade">
+      <p class="eyebrow">${HOUSE.accent}</p>
+      <h1>${HOUSE.name}</h1>
+      <p class="tag">${HOUSE.tag}</p>
+      <p class="blurb">${HOUSE.blurb}</p>
+      <div class="spec">${HOUSE.spec.map(x=>`<div>${x[0]}<b>${x[1]}</b></div>`).join('')}</div>
+      <a class="cta" href="#range">See the brands</a>
+    </div>
+    <div class="shot fade"><div class="hero-quad">${order.map(k=>`
+      <a href="#range" data-goto="${k}" aria-label="${BRANDS[k].name}"><img src="${BRANDS[k].shot}" alt="${BRANDS[k].name}"><b>${BRANDS[k].name}</b></a>`).join('')}</div></div>`;
+
+  const half=Array.from({length:6},()=>`<span><i>${HOUSE.name}</i>${HOUSE.tag}</span>`).join('');
+  document.getElementById('marq').innerHTML=half+half;
+
+  range.innerHTML = `
+    <div class="sechead">
+      <div><h2>The brands</h2></div>
+      <a class="cta" style="margin:0" href="#trade">Trade enquiries</a>
+    </div>
+    <div class="brandex">${order.map(k=>{const d=BRANDS[k];return `
+      <a href="#top" data-goto="${k}" class="fade">
+        <div class="bx-pic"><img src="${d.shot}" alt="${d.name}" loading="lazy"></div>
+        <h3>${d.name}</h3>
+        <p class="bx-accent">${d.accent}</p>
+        <p>${d.tag}</p>
+        <span class="bx-go">View the range</span>
+      </a>`;}).join('')}</div>`;
+
+  document.querySelectorAll('[data-goto]').forEach(a=>{
+    a.addEventListener('click', ev=>{ ev.preventDefault(); select(a.dataset.goto);
+      document.getElementById('top') ? window.scrollTo({top:0,behavior:'smooth'}) : null; });
+  });
+}
+
 const order = ["solara","vanta","onlycans","divot"];
 const nav = document.getElementById('nav');
 const hero = document.getElementById('hero');
@@ -413,6 +490,7 @@ order.forEach(k=>{
 function select(k){
   const d=BRANDS[k];
   document.body.dataset.brand=k;
+  hero.className='hero';
 
   const bg=document.getElementById('bgvid'), bgEl=document.getElementById('bgvidEl');
   if(d.bgVideo && !matchMedia('(prefers-reduced-motion: reduce)').matches){
@@ -471,7 +549,8 @@ function select(k){
 
   wireRenders();
 }
-select('solara');
+selectHouse();
+document.getElementById('homeBtn').addEventListener('click', ()=>{ selectHouse(); window.scrollTo({top:0,behavior:'smooth'}); });
 
 const gate=document.getElementById('gate');
 try{ if(sessionStorage.getItem('mdg-age')==='ok') gate.style.display='none'; }catch(e){}
