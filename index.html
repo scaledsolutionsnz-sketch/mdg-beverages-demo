@@ -564,9 +564,8 @@ function wireGallery(){
   }
 
   items.forEach((el,i)=>{
-    el.addEventListener('pointerenter',()=>{           // hover pulls it forward and enlarges it
+    el.addEventListener('pointerenter',()=>{           // hover just holds the roll still
       hovered = i; el.classList.add('on');
-      if(opened === -1) target = frontT(i);
     });
     el.addEventListener('pointerleave',()=>{ if(hovered===i) hovered = -1; el.classList.remove('on'); });
     el.addEventListener('click',ev=>{
@@ -612,7 +611,7 @@ function wireGallery(){
     items.forEach((el,i)=>{
       const a = (t + i/n) * Math.PI * 2;
       const depth = (Math.cos(a) + 1) / 2;                 // 0 back, 1 front
-      const focus = (opened===i || (opened===-1 && hovered===i)) ? 0.26 : 0;
+      const focus = (opened===i) ? 0.30 : 0;   // only a clicked can enlarges
       const s = 0.72 + depth * 0.28 + focus;
       const spread = 1 + (1 - depth) * 0.30;   // keep a receding can from hiding behind the front one
       el.style.transform = `translate(-50%,-100%) translateX(${(Math.sin(a)*rx*spread).toFixed(1)}px) scale(${s.toFixed(3)})`;
