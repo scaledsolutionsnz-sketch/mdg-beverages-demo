@@ -117,27 +117,39 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 .sechead{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
   padding-bottom:20px;border-bottom:1px solid var(--rule);margin-bottom:44px}
 .sechead h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4vw,46px);margin:8px 0 0}
-.grid{display:grid;gap:clamp(22px,3vw,44px);grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
-.card{border:1px solid var(--rule);padding:0 0 28px;transition:border-color .3s}
-.card:hover{border-color:var(--accent)}
-.card .pic{aspect-ratio:4/3;overflow:hidden;background:#000}
+/* ---------- catalogue grid ---------- */
+.cat{position:relative}
+.cat-rail{position:absolute;left:-4px;top:6px;writing-mode:vertical-rl;font-family:var(--display);
+  font-size:clamp(30px,3.4vw,50px);letter-spacing:.06em;color:var(--fg);opacity:.16;pointer-events:none;user-select:none}
+.grid{display:grid;gap:clamp(34px,4.4vw,68px) clamp(24px,3vw,52px);
+  grid-template-columns:repeat(3,minmax(0,1fr));padding-left:clamp(0px,4vw,76px)}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.card{border:0;padding:0;background:none;display:flex;flex-direction:column;max-width:330px;width:100%}
+.card .pic{position:relative;aspect-ratio:3/4;overflow:hidden;background:none;
+  display:flex;align-items:flex-end;justify-content:center}
 .card .pic img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
-.card:hover .pic img{transform:scale(1.04)}
-.card .pic.pic-render{display:flex;align-items:center;justify-content:center;position:relative;
-  background:radial-gradient(62% 74% at 50% 62%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 72%), color-mix(in srgb, var(--bg) 82%, #000)}
-.card .pic.pic-render img.prod{max-height:86%;width:auto;height:86%;object-fit:contain;background:none;
-  filter:drop-shadow(0 34px 46px rgba(0,0,0,.65));will-change:transform;
-  transition:transform .3s cubic-bezier(.2,.7,.2,1)}
-.card:hover .pic-render .prod{transform:none}
+.card:hover .pic img{transform:scale(1.03)}
+.card .pic.pic-render{background:none}
+.card .pic.pic-render img.prod{max-height:96%;height:96%;width:auto;object-fit:contain;background:none;
+  filter:drop-shadow(0 30px 34px rgba(0,0,0,.6));will-change:transform;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1)}
 .pic-render::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg, rgba(2,0,0,.9) 0%, rgba(2,0,0,.45) 100%);
+  background:linear-gradient(180deg, color-mix(in srgb, var(--bg) 92%, transparent) 0%, color-mix(in srgb, var(--bg) 62%, transparent) 100%);
   opacity:1;transition:opacity 1s ease}
 .pic-render.lifted::after{opacity:0}
 @media (prefers-reduced-motion:reduce){.pic-render::after{opacity:0}.pic-render .prod{transition:none}}
-.card .txt{padding:24px 24px 0}
-.card h3{font-family:var(--display);font-size:24px;font-weight:400;margin:10px 0 0}
-.card p{font-size:14px;line-height:1.7;color:var(--muted);margin:12px 0 0}
-.card .meta{margin-top:16px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+/* label block: numeral, hairline, name + spec */
+.card .txt{display:grid;grid-template-columns:auto 1px 1fr;gap:0 16px;align-items:start;
+  margin-top:22px;padding:0}
+.cat-num{font-family:var(--display);font-size:clamp(28px,3vw,40px);line-height:.9;
+  color:var(--fg);opacity:.55;font-weight:400}
+.cat-rule{width:1px;align-self:stretch;background:var(--rule)}
+.card h3{font-family:var(--body);font-size:13px;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;margin:2px 0 0;color:var(--fg)}
+.card .meta{margin-top:7px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.card p.copy{font-size:13.5px;line-height:1.75;color:var(--muted);margin:11px 0 0;max-width:34ch}
+@media(max-width:640px){.cat-rail{display:none}.grid{padding-left:0}}
 
 /* ---------- lifestyle strip ---------- */
 .life{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,26px);margin-top:clamp(26px,4vw,48px)}
@@ -170,6 +182,11 @@ select option{color:#111}
 
 footer{background:#040406;color:rgba(242,237,228,.5);padding:52px var(--pad);font-size:13px;line-height:1.9;position:relative;z-index:1}
 #bgvid{position:fixed;inset:0;z-index:0;pointer-events:none}
+#spotlight{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;
+  transition:opacity .9s ease;
+  background:radial-gradient(58% 52% at 50% 52%, rgba(0,0,0,.32) 0%, rgba(0,0,0,.86) 78%)}
+body.spot-on #spotlight{opacity:1}
+@media (prefers-reduced-motion:reduce){#spotlight{transition:none}}
 #bgvid[hidden]{display:none}
 #bgvid video{width:100%;height:100%;object-fit:cover;display:block}
 main,header{position:relative;z-index:1}
@@ -223,6 +240,7 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
 </header>
 
 <div id="bgvid" aria-hidden="true" hidden><video id="bgvidEl" muted loop playsinline></video></div>
+<div id="spotlight" aria-hidden="true"></div>
 
 <main>
   <div class="hero" id="hero"></div>
@@ -355,6 +373,10 @@ const BRANDS = {
   }
 };
 
+new IntersectionObserver(es=>{
+  es.forEach(e=>document.body.classList.toggle('spot-on', e.isIntersecting));
+},{threshold:.28}).observe(document.getElementById('range'));
+
 function wireRenders(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll('.pic-render').forEach(pic=>{
@@ -426,13 +448,24 @@ function select(k){
       <div><h2>The ${d.name} range</h2></div>
       <a class="cta" style="margin:0" href="#trade">Stock ${d.name}</a>
     </div>
-    <div class="grid">${d.range.map((r,idx)=>`
-      <article class="card fade" style="animation-delay:${idx*90}ms">
-        <div class="pic${r.render?' pic-render':''}">${r.render
-          ? `<img class="prod" src="${r.render}" alt="${r.name}" loading="lazy">`
-          : `<img src="${r.img}" alt="${r.name}" loading="lazy">`}</div>
-        <div class="txt"><p class="meta">${r.meta}</p><h3>${r.name}</h3><p>${r.copy}</p></div>
-      </article>`).join('')}</div>
+    <div class="cat">
+      <span class="cat-rail" aria-hidden="true">${d.name}</span>
+      <div class="grid">${d.range.map((r,idx)=>`
+        <article class="card fade" style="animation-delay:${idx*90}ms">
+          <div class="pic${r.render?' pic-render':''}">${r.render
+            ? `<img class="prod" src="${r.render}" alt="${r.name}" loading="lazy">`
+            : `<img src="${r.img}" alt="${r.name}" loading="lazy">`}</div>
+          <div class="txt">
+            <span class="cat-num">${String(idx+1).padStart(2,'0')}</span>
+            <span class="cat-rule" aria-hidden="true"></span>
+            <div>
+              <h3>${r.name}</h3>
+              <p class="meta">${r.meta}</p>
+              <p class="copy">${r.copy}</p>
+            </div>
+          </div>
+        </article>`).join('')}</div>
+    </div>
     ${d.gallery?`<div class="life">${d.gallery.map((g,idx)=>`
       <figure class="fade" style="animation-delay:${180+idx*90}ms"><img src="${g.img}" alt="${g.alt}" loading="lazy"></figure>`).join('')}</div>`:''}`;
 
