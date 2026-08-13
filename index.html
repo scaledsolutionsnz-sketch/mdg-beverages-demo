@@ -160,11 +160,29 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 
 /* ---------- single-product showcase ---------- */
 .solo{position:relative;min-height:clamp(600px,78vh,780px);padding-left:clamp(0px,4vw,76px)}
+/* ingredient callouts */
+.bub{position:absolute;z-index:6;pointer-events:none;margin:0;max-width:190px}
+.bub b{display:block;font-family:var(--body);font-size:10.5px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--fg);margin-bottom:3px}
+.bub span{display:block;font-size:11.5px;line-height:1.5;color:var(--muted)}
+.bub .lead{position:absolute;height:1px;background:linear-gradient(90deg,
+  color-mix(in srgb, var(--fg) 34%, transparent), color-mix(in srgb, var(--fg) 6%, transparent));
+  transform-origin:0 50%}
+.bub .lead::before{content:"";position:absolute;left:-3px;top:50%;width:5px;height:5px;border-radius:50%;
+  transform:translateY(-50%);background:var(--accent)}
+.bub.b1{left:-1%;top:16%;text-align:right}
+.bub.b1 .lead{right:-6px;top:9px;width:clamp(60px,9vw,120px);transform:translateX(100%) rotate(24deg)}
+.bub.b2{left:1%;bottom:14%;text-align:right}
+.bub.b2 .lead{right:-6px;top:9px;width:clamp(60px,8vw,104px);transform:translateX(100%) rotate(-16deg)}
+.bub.b3{right:-9%;top:13%}
+.bub.b3 .lead{left:-6px;top:9px;width:clamp(60px,8vw,112px);transform:translateX(-100%) rotate(168deg)}
+@media(max-width:900px){.bub{display:none}}
+
 /* rolling gallery: equal-size cans, front one largest, pauses on hover */
 .orbit{position:absolute;left:clamp(0px,2vw,32px);top:50%;transform:translateY(-50%);
   width:min(700px,52vw);height:clamp(380px,42vw,540px)}
-.gitem{position:absolute;left:50%;top:50%;will-change:transform,opacity;
-  transform:translate(-50%,-50%);cursor:pointer}
+.gitem{position:absolute;left:50%;top:84%;transform-origin:50% 100%;
+  will-change:transform,opacity;transform:translate(-50%,-100%);cursor:pointer}
 .gitem img{height:var(--gh);width:auto;display:block}
 .gitem.on img{filter:
   drop-shadow(2px 0 0 var(--fg)) drop-shadow(-2px 0 0 var(--fg))
@@ -408,6 +426,11 @@ const BRANDS = {
       {src:"img/solara-can-angled.png",   cls:"o2", alt:"Solara can, angled from above"},
       {src:"img/solara-can-lowangle.png", cls:"o3", alt:"Solara can, low angle"}
     ],
+    bubbles:[
+      {cls:"b1", t:"Blood orange", d:"Citrus lift, bittersweet finish"},
+      {cls:"b2", t:"Stone fruit",  d:"Rounds out the acidity"},
+      {cls:"b3", t:"Dry base",     d:"Sparkling, no added syrup"}
+    ],
     panels:[
       {cls:"p1", title:"Sparkling Mimosa",
        list:["Blood orange","Stone fruit","Dry sparkling base","No added syrup"],
@@ -505,12 +528,13 @@ function wireGallery(){
         t += dt * 0.075;                                   // free rotation
       }
     }
-    const rx = gal.clientWidth * 0.27, ry = gal.clientHeight * 0.135;
+    const rx = gal.clientWidth * 0.27;
     items.forEach((el,i)=>{
       const a = (t + i/n) * Math.PI * 2;
       const depth = (Math.cos(a) + 1) / 2;                 // 0 back, 1 front
       const s = 0.72 + depth * 0.28 + (hovered===i ? .04 : 0);
-      el.style.transform = `translate(-50%,-50%) translate(${(Math.sin(a)*rx).toFixed(1)}px, ${(-Math.cos(a)*ry).toFixed(1)}px) scale(${s.toFixed(3)})`;
+      const spread = 1 + (1 - depth) * 0.30;   // keep a receding can from hiding behind the front one
+      el.style.transform = `translate(-50%,-100%) translateX(${(Math.sin(a)*rx*spread).toFixed(1)}px) scale(${s.toFixed(3)})`;
       el.style.zIndex = 10 + Math.round(depth*100) + (hovered===i ? 200 : 0);
       el.style.opacity = (0.76 + depth*0.24).toFixed(3);
       el.style.filter = `brightness(${(0.82 + depth*0.18).toFixed(3)}) drop-shadow(0 24px 30px rgba(0,0,0,.6))`;
@@ -646,6 +670,8 @@ function select(k){
     ${d.angles ? `
     <div class="solo">
       <div class="orbit" id="orbit">
+        ${(d.bubbles||[]).map(x=>`
+        <figure class="bub ${x.cls}"><span class="lead" aria-hidden="true"></span><b>${x.t}</b><span>${x.d}</span></figure>`).join('')}
         ${d.angles.map(a=>`
         <figure class="gitem ${a.cls}"><img src="${a.src}" alt="${a.alt}" loading="lazy"></figure>`).join('')}
       </div>
