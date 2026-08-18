@@ -148,14 +148,25 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 .sechead h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4vw,46px);margin:8px 0 0}
 /* ---------- house home ---------- */
 .house-hero .copy{padding-right:clamp(20px,4vw,60px)}
-.hero-quad{display:grid;grid-template-columns:1fr 1fr;gap:2px;height:100%;min-height:340px}
-.hero-quad a:nth-child(3):last-child{grid-column:1/-1}
-.hero-quad a{position:relative;overflow:hidden;display:block;background:#000}
-.hero-quad img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease,opacity .4s ease;opacity:.82}
-.hero-quad a:hover img{transform:scale(1.06);opacity:1}
-.hero-quad b{position:absolute;left:16px;bottom:14px;z-index:2;font-family:var(--display);
-  font-size:17px;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:#fff;
-  text-shadow:0 2px 18px rgba(0,0,0,.8)}
+/* the lineup: three renders standing on one baseline over the running film */
+.tri{position:relative;height:100%;min-height:340px;overflow:hidden;background:#000;
+  display:grid;grid-template-columns:repeat(3,1fr);align-items:end;
+  gap:clamp(4px,1vw,16px);
+  padding:clamp(26px,5vh,60px) clamp(12px,2vw,30px) clamp(30px,6vh,64px)}
+.tri-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.tri-scrim{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(0,0,0,.30) 0%,rgba(0,0,0,.42) 55%,rgba(0,0,0,.72) 100%)}
+.tri-item{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;text-decoration:none;min-width:0}
+.tri-item img{max-height:var(--h,80%);max-width:100%;width:auto;object-fit:contain;
+  filter:drop-shadow(0 26px 34px rgba(0,0,0,.75));
+  transition:transform .5s cubic-bezier(.2,.8,.2,1),filter .5s ease}
+.tri-item:hover img,.tri-item:focus-visible img{transform:translateY(-12px) scale(1.05);
+  filter:drop-shadow(0 34px 42px rgba(0,0,0,.85))}
+.tri-item b{margin-top:16px;font-family:var(--display);font-size:clamp(11px,1.1vw,15px);
+  font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:#fff;white-space:nowrap;
+  text-shadow:0 2px 18px rgba(0,0,0,.9);transition:color .25s}
+.tri-item:hover b{color:var(--accent)}
 .brandex{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
 .brandex a{display:block;text-decoration:none;color:inherit;border-top:1px solid var(--rule);padding-top:18px;
   transition:border-color .3s}
@@ -168,7 +179,9 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 .brandex p{font-size:13.5px;line-height:1.7;color:var(--muted);margin:12px 0 0}
 .brandex .bx-go{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--fg)}
 @media(max-width:1000px){.brandex{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.brandex{grid-template-columns:1fr}.hero-quad{min-height:260px}}
+@media(max-width:560px){.brandex{grid-template-columns:1fr}
+  .tri{min-height:300px;gap:2px;padding:22px 8px 26px}
+  .tri-item b{margin-top:10px;font-size:10px;letter-spacing:.12em}}
 
 /* ---------- single-product showcase ---------- */
 .solo{position:relative;min-height:clamp(680px,84vh,900px);padding-left:clamp(0px,4vw,76px)}
@@ -841,6 +854,12 @@ function wireRenders(){
   });
 }
 
+const HERO_LINEUP = [
+  {k:"solara", h:"62%", img:"img/solara-can-render.png",   label:"Solara",       alt:"Solara Sparkling Mimosa can"},
+  {k:"vanta",  h:"62%", img:"img/vanta-can-render.png",    label:"Vanta can",    alt:"Vanta Ros&eacute; 250 mL can"},
+  {k:"vanta",  h:"100%",img:"img/vanta-bottle-render.png", label:"Vanta bottle", alt:"Vanta Ros&eacute; 750 mL bottle"}
+];
+
 const HOUSE = {
   name:"MDG Beverages", accent:"New Zealand drinks house",
   tag:"Built for the room, not the shelf.",
@@ -866,10 +885,16 @@ function selectHouse(){
       <a class="cta solid" data-shop="store" data-buy="Shop the range" href="#"><span class="shop-label">Shop the range</span></a>
       <a class="cta" href="#range" style="margin-left:10px">See the brands</a>
     </div>
-    <div class="shot fade"><div class="hero-quad">${order.map(k=>{const b=BRANDS[k];return `
-      <a href="#range" data-goto="${k}" aria-label="${b.name}">${b.shot
-        ? `<img src="${b.shot}" alt="${b.name}">`
-        : `<span class="soon-tile" aria-hidden="true"><i>Coming soon</i></span>`}<b>${b.name}</b></a>`;}).join('')}</div></div>`;
+    <div class="shot fade"><div class="tri">
+      ${matchMedia('(prefers-reduced-motion: reduce)').matches ? '' :
+        `<video class="tri-vid" src="img/vanta-bg.mp4" autoplay muted loop playsinline aria-hidden="true"></video>`}
+      <span class="tri-scrim" aria-hidden="true"></span>
+      ${HERO_LINEUP.map(x=>`
+      <a class="tri-item" href="#top" data-goto="${x.k}" style="--h:${x.h}" aria-label="${x.label}">
+        <img src="${x.img}" alt="${x.alt}" width="364" height="1000">
+        <b>${x.label}</b>
+      </a>`).join('')}
+    </div></div>`;
 
   const half=Array.from({length:6},()=>`<span><i>${HOUSE.name}</i>${HOUSE.tag}</span>`).join('');
   document.getElementById('marq').innerHTML=half+half;
