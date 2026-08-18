@@ -150,13 +150,13 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 .house-hero .copy{padding-right:clamp(20px,4vw,60px)}
 /* the lineup: three renders standing on one baseline over the running film */
 .tri{position:relative;height:100%;min-height:340px;overflow:hidden;background:#000;
-  display:grid;grid-template-columns:repeat(3,1fr);align-items:end;
+  display:grid;grid-template-columns:repeat(3,1fr);align-items:center;
   gap:clamp(4px,1vw,16px);
   padding:clamp(26px,5vh,60px) clamp(12px,2vw,30px) clamp(30px,6vh,64px)}
 .tri-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 .tri-scrim{position:absolute;inset:0;z-index:1;
   background:linear-gradient(180deg,rgba(0,0,0,.30) 0%,rgba(0,0,0,.42) 55%,rgba(0,0,0,.72) 100%)}
-.tri-item{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;
+.tri-item{position:relative;z-index:2;height:min(74vh,100%);display:flex;flex-direction:column;
   align-items:center;justify-content:flex-end;text-decoration:none;min-width:0}
 .tri-item img{max-height:var(--h,80%);max-width:100%;width:auto;object-fit:contain;
   filter:drop-shadow(0 26px 34px rgba(0,0,0,.75));
@@ -855,9 +855,9 @@ function wireRenders(){
 }
 
 const HERO_LINEUP = [
-  {k:"solara", h:"62%", img:"img/solara-can-render.png",   label:"Solara",       alt:"Solara Sparkling Mimosa can"},
-  {k:"vanta",  h:"62%", img:"img/vanta-can-render.png",    label:"Vanta can",    alt:"Vanta Ros&eacute; 250 mL can"},
-  {k:"vanta",  h:"100%",img:"img/vanta-bottle-render.png", label:"Vanta bottle", alt:"Vanta Ros&eacute; 750 mL bottle"}
+  {k:"solara", h:"54%", img:"img/solara-can-render.png",   label:"Solara",       alt:"Solara Sparkling Mimosa can"},
+  {k:"vanta",  h:"54%", img:"img/vanta-can-render.png",    label:"Vanta can",    alt:"Vanta Ros&eacute; 250 mL can"},
+  {k:"vanta",  h:"86%", img:"img/vanta-bottle-render.png", label:"Vanta bottle", alt:"Vanta Ros&eacute; 750 mL bottle"}
 ];
 
 const HOUSE = {
