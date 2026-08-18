@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MDG Beverages | Four brands, one bar cart</title>
-<meta name="description" content="MDG Beverages is a New Zealand drinks house. Four brands, one bar cart.">
+<title>MDG Beverages | A New Zealand drinks house</title>
+<meta name="description" content="MDG Beverages is a New Zealand drinks house. Built for the room it gets opened in.">
 <meta property="og:title" content="MDG Beverages">
-<meta property="og:description" content="A New Zealand drinks house. Four brands, one bar cart.">
+<meta property="og:description" content="A New Zealand drinks house. Built for the room it gets opened in.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://mdg-beverages-demo.vercel.app/img/solara.jpg">
 <meta name="theme-color" content="#07070A">
@@ -29,8 +29,7 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-
   transition:background .6s ease,color .6s ease;overflow-x:hidden}
 body[data-brand="solara"]{--bg:#120A06;--fg:#F6EBDD;--accent:#D9793F;--muted:rgba(246,235,221,.6);--rule:rgba(246,235,221,.16)}
 body[data-brand="vanta"]{--bg:#020000;--fg:#F6E9F1;--accent:#EC008C;--muted:rgba(246,233,241,.6);--rule:rgba(246,233,241,.16)}
-body[data-brand="onlycans"]{--bg:#F7F1EC;--fg:#1A1114;--accent:#E2653F;--muted:rgba(26,17,20,.62);--rule:rgba(26,17,20,.14)}
-body[data-brand="divot"]{--bg:#050507;--fg:#EFEFF2;--accent:#E0007A;--muted:rgba(239,239,242,.6);--rule:rgba(239,239,242,.16)}
+body[data-brand="bespoke"]{--bg:#0A0A0C;--fg:#EFEDE7;--accent:#C9A24B;--muted:rgba(239,237,231,.6);--rule:rgba(239,237,231,.16)}
 
 a{color:inherit}
 .eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;font-weight:500;color:var(--accent)}
@@ -93,7 +92,6 @@ body.bgvid-on .hero .copy{position:relative;z-index:2}
 .hero h1{font-family:var(--display);font-weight:400;margin:14px 0 0;
   font-size:clamp(58px,10.5vw,146px);line-height:.86;letter-spacing:-.01em;
   margin-right:clamp(-180px,-10vw,-40px);position:relative;text-shadow:0 2px 40px rgba(0,0,0,.35)}
-body[data-brand="onlycans"] .hero h1{text-shadow:none}
 .hero h1 em{font-style:italic;color:var(--accent)}
 .tag{font-family:var(--display);font-style:italic;font-size:clamp(19px,2.4vw,28px);margin:22px 0 0;color:var(--fg)}
 .blurb{max-width:44ch;font-size:16px;line-height:1.78;color:var(--muted);margin:22px 0 0}
@@ -125,7 +123,6 @@ body.bgvid-on .shot:after{display:none}
 @keyframes drift{from{transform:scale(1)}to{transform:scale(1.06)}}
 .shot:after{content:"";position:absolute;inset:0;
   background:linear-gradient(90deg,var(--bg) 0%,rgba(0,0,0,0) 34%);pointer-events:none}
-body[data-brand="onlycans"] .shot:after{background:linear-gradient(90deg,var(--bg) 0%,rgba(255,255,255,0) 30%)}
 
 /* ---------- marquee ---------- */
 .marq{position:relative;z-index:2;background:color-mix(in srgb, var(--bg) 88%, transparent);
@@ -141,21 +138,22 @@ body[data-brand="onlycans"] .shot:after{background:linear-gradient(90deg,var(--b
 /* ---------- range ---------- */
 section{padding:clamp(56px,8vw,110px) var(--pad);position:relative;z-index:1}
 body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#house{
-  background:linear-gradient(180deg, color-mix(in srgb, var(--bg) 88%, transparent), color-mix(in srgb, var(--bg) 94%, transparent));
-  backdrop-filter:blur(3px)}
+  background:linear-gradient(180deg, color-mix(in srgb, var(--bg) 62%, transparent), color-mix(in srgb, var(--bg) 74%, transparent));
+  backdrop-filter:blur(2px)}
 .sechead{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
   padding-bottom:20px;border-bottom:1px solid var(--rule);margin-bottom:44px}
 .sechead h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4vw,46px);margin:8px 0 0}
 /* ---------- house home ---------- */
 .house-hero .copy{padding-right:clamp(20px,4vw,60px)}
 .hero-quad{display:grid;grid-template-columns:1fr 1fr;gap:2px;height:100%;min-height:340px}
+.hero-quad a:nth-child(3):last-child{grid-column:1/-1}
 .hero-quad a{position:relative;overflow:hidden;display:block;background:#000}
 .hero-quad img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease,opacity .4s ease;opacity:.82}
 .hero-quad a:hover img{transform:scale(1.06);opacity:1}
 .hero-quad b{position:absolute;left:16px;bottom:14px;z-index:2;font-family:var(--display);
   font-size:17px;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:#fff;
   text-shadow:0 2px 18px rgba(0,0,0,.8)}
-.brandex{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
+.brandex{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
 .brandex a{display:block;text-decoration:none;color:inherit;border-top:1px solid var(--rule);padding-top:18px;
   transition:border-color .3s}
 .brandex a:hover{border-color:var(--accent)}
@@ -171,18 +169,39 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 
 /* ---------- single-product showcase ---------- */
 .solo{position:relative;min-height:clamp(600px,78vh,780px);padding-left:clamp(0px,4vw,76px)}
-/* two wheels side by side */
-.wheels{position:absolute;left:clamp(0px,2vw,30px);top:50%;transform:translateY(-50%);
-  width:min(720px,54vw);display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,2vw,30px)}
-.wheels .orbit{position:relative;left:auto;top:auto;transform:none;width:100%;
-  height:clamp(380px,38vw,510px);--gh:clamp(180px,20vw,290px)}
-.wheels .bub{max-width:150px;left:50%;right:auto;transform:translate(-50%,6px);text-align:center}
-.wheels .orbit.sel .bub{transform:translate(-50%,0)}
-.wheels .bub.t1{top:0}
-.wheels .bub.t2{bottom:-2%}
-.wheels .bub .dot{display:none}
-@media(max-width:900px){.wheels{position:relative;left:auto;top:auto;transform:none;width:100%;
-  grid-template-columns:1fr;gap:40px}}
+/* one bottle, one can. each holds a single image and turns through its angles */
+.posers{position:absolute;left:clamp(0px,2vw,30px);top:50%;transform:translateY(-50%);
+  width:min(680px,52vw);display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,2vw,34px)}
+.poser{position:relative;width:100%;height:clamp(370px,37vw,500px);cursor:pointer;outline:0}
+.poser .pstage{position:absolute;left:0;right:0;top:50%;height:clamp(240px,26vw,350px);
+  transform:translateY(-50%);animation:floatBob 7s ease-in-out infinite alternate;
+  animation-delay:var(--delay,0s)}
+.poser .pimg{position:absolute;inset:0;margin:auto;max-height:100%;max-width:100%;width:auto;height:auto;
+  object-fit:contain;opacity:0;transition:opacity 1.1s ease,transform .55s cubic-bezier(.2,.8,.2,1);
+  filter:drop-shadow(0 30px 38px rgba(0,0,0,.62))}
+.poser .pimg.show{opacity:1}
+.poser:hover .pimg.show{transform:scale(1.03)}
+.poser.sel .pimg.show{transform:scale(1.07)}
+.poser .pshadow{position:absolute;left:50%;bottom:9%;width:42%;height:14px;transform:translateX(-50%);
+  border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.55),transparent 70%);filter:blur(7px);
+  animation:shadowPulse 7s ease-in-out infinite alternate;animation-delay:var(--delay,0s)}
+.poser .plabel{position:absolute;left:50%;bottom:0;transform:translateX(-50%);white-space:nowrap;
+  font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);transition:color .3s}
+.poser:hover .plabel{color:var(--fg)}
+.poser.sel .plabel{color:var(--accent)}
+.poser .ring{top:12%}
+.poser.sel .ring{animation:crackPop .62s cubic-bezier(.2,.8,.2,1) 1 both}
+.posers .bub{max-width:172px;left:50%;right:auto;transform:translate(-50%,6px);text-align:center}
+.poser.sel .bub{opacity:1;transform:translate(-50%,0)}
+.poser.sel .bub.b2{transition-delay:.07s}
+.poser.sel .leads{opacity:1}
+.posers .bub.t1{top:0}
+.posers .bub.t2{bottom:0}
+.posers .bub .dot{display:none}
+@media (prefers-reduced-motion:reduce){.poser .pstage,.poser .pshadow{animation:none}}
+@media(max-width:900px){.posers{position:relative;left:auto;top:auto;transform:none;width:100%;
+  grid-template-columns:1fr 1fr;gap:18px}
+  .poser{height:clamp(280px,62vw,360px)}}
 
 /* floating product pair (angles swap every few seconds) */
 .floatrow{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,70px);align-items:end;
@@ -290,6 +309,20 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
   .solo-sig{position:static;text-align:center}
 }
 
+/* ---------- coming soon ---------- */
+.soon-tile{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb, var(--fg) 5%, transparent);border:1px solid var(--rule)}
+.soon-tile i{font-family:var(--display);font-style:italic;font-size:clamp(15px,1.6vw,20px);
+  color:color-mix(in srgb, var(--fg) 72%, transparent);letter-spacing:.04em}
+.bx-pic{position:relative}
+.soon-tile.big{position:relative;height:100%;min-height:340px}
+.soon-tile.big i{font-size:clamp(22px,3vw,38px)}
+nav button.soon-tab i{font-style:normal;font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  margin-left:7px;padding:2px 6px;border:1px solid var(--rule);color:var(--muted);vertical-align:middle}
+.soon-panel{max-width:60ch;padding-left:clamp(0px,4vw,76px)}
+.soon-panel h3{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.4vw,40px);margin:10px 0 16px}
+.soon-panel p{font-size:15px;line-height:1.8;color:var(--muted);margin:0 0 26px;max-width:52ch}
+
 /* ---------- catalogue grid ---------- */
 .cat{position:relative}
 .cat-rail{position:absolute;left:-4px;top:6px;writing-mode:vertical-rl;font-family:var(--display);
@@ -357,7 +390,7 @@ footer{background:#040406;color:rgba(242,237,228,.5);padding:52px var(--pad);fon
 #bgvid{position:fixed;inset:0;z-index:0;pointer-events:none}
 #spotlight{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;
   transition:opacity .9s ease;
-  background:radial-gradient(58% 52% at 50% 52%, rgba(0,0,0,.32) 0%, rgba(0,0,0,.86) 78%)}
+  background:radial-gradient(62% 56% at 50% 52%, rgba(0,0,0,.12) 0%, rgba(0,0,0,.70) 82%)}
 body.spot-on #spotlight{opacity:1}
 @media (prefers-reduced-motion:reduce){#spotlight{transition:none}}
 #bgvid[hidden]{display:none}
@@ -372,7 +405,6 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
   .hero h1{margin-right:0}
   .shot{order:-1;min-height:56vh}
   .shot:after{background:linear-gradient(0deg,var(--bg) 0%,rgba(0,0,0,0) 42%)}
-  body[data-brand="onlycans"] .shot:after{background:linear-gradient(0deg,var(--bg) 0%,rgba(255,255,255,0) 38%)}
   .two{grid-template-columns:1fr}
   .house{padding:0 16px}
   nav button{min-width:104px;font-size:13px;padding:16px 8px}
@@ -424,12 +456,12 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
   <div class="house-band">
     <section>
       <div class="sechead reveal">
-        <div><h2>Four brands, one bar cart</h2></div>
+        <div><h2>One house, built for the room</h2></div>
       </div>
       <div class="two">
         <div>
           <p class="lead">MDG Beverages builds drinks for the moment they get opened, not for the shelf they sit on.</p>
-          <p style="margin-top:26px">Every brand in the range starts the same way. A room, an occasion, a crowd. Then the liquid gets built to suit it. That is why a Solara does not taste like a Divot, and why neither of them reads like the other on a shelf.</p>
+          <p style="margin-top:26px">Every brand in the range starts the same way. A room, an occasion, a crowd. Then the liquid gets built to suit it. That is why a Solara does not taste like a Vanta, and why neither of them reads like the other on a shelf.</p>
           <p>We handle the blending, the packaging and the supply out of New Zealand, and we work with venues, retailers and distributors across the country.</p>
         </div>
         <div>
@@ -437,8 +469,7 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
           <ul class="list">
             <li>Solara <span>Sparkling mimosa</span></li>
             <li>Vanta <span>Sparkling ros&eacute;</span></li>
-            <li>OnlyCans <span>Vodka sodas</span></li>
-            <li>Divot <span>Urban Polo mixers</span></li>
+            <li>Bespoke <span>Coming soon</span></li>
           </ul>
         </div>
       </div>
@@ -504,8 +535,7 @@ const SHOP = {
   store:    "",
   solara:   "",
   vanta:    "",
-  onlycans: "",
-  divot:    ""
+  bespoke:  ""
 };
 
 const BRANDS = {
@@ -547,17 +577,19 @@ const BRANDS = {
     spec:[["Style","Sparkling rosé"],["Formats","250 mL can &middot; 750 mL bottle"],["Launch","Late 2026"]],
     shot:"img/vanta.jpg",
     bgVideo:"img/vanta-bg.mp4",
-    wheels:[
-      { bubbles:[{cls:"t1",t:"Dark fruit",d:"Berry depth, no sweetness"},
+    posers:[
+      { label:"Ros&eacute; 750 mL",
+        bubbles:[{cls:"t1",t:"Dark fruit",d:"Berry depth, no sweetness"},
                  {cls:"t2",t:"Fine bead",d:"Slow, persistent sparkle"}],
-        angles:[{src:"img/v-bottle-2.png",cls:"o1",alt:"Vanta bottle, front"},
-                {src:"img/v-bottle-1.png",cls:"o2",alt:"Vanta bottle, high angle"},
-                {src:"img/v-bottle-3.png",cls:"o3",alt:"Vanta bottle, low angle"}] },
-      { bubbles:[{cls:"t1",t:"Same liquid",d:"Nothing lost in the can"},
+        angles:[{src:"img/v-bottle-2.png",alt:"Vanta bottle, front"},
+                {src:"img/v-bottle-1.png",alt:"Vanta bottle, high angle"},
+                {src:"img/v-bottle-3.png",alt:"Vanta bottle, low angle"}] },
+      { label:"Ros&eacute; 250 mL",
+        bubbles:[{cls:"t1",t:"Same liquid",d:"Nothing lost in the can"},
                  {cls:"t2",t:"No glass",d:"Festivals, poolside, anywhere"}],
-        angles:[{src:"img/v-can-1.png",cls:"o1",alt:"Vanta can, front"},
-                {src:"img/v-can-2.png",cls:"o2",alt:"Vanta can, high angle"},
-                {src:"img/v-can-3.png",cls:"o3",alt:"Vanta can, low angle"}] }
+        angles:[{src:"img/v-can-1.png",alt:"Vanta can, front"},
+                {src:"img/v-can-2.png",alt:"Vanta can, high angle"},
+                {src:"img/v-can-3.png",alt:"Vanta can, low angle"}] }
     ],
     panels:[
       {cls:"p1", title:"Sparkling Ros&eacute;",
@@ -575,36 +607,13 @@ const BRANDS = {
        copy:"The same liquid, no ice bucket required. Built for festivals, poolside and anywhere glass is not welcome."}
     ]
   },
-  onlycans: {
-    name:"OnlyCans", accent:"Vodka soda", italic:null,
-    tag:"Good times only.",
-    blurb:"Vodka, soda and real fruit, wrapped in the group chat you should have left. Light, sharp and unserious on purpose.",
-    spec:[["Style","Vodka with soda"],["Size","330 mL"],["ABV","4.5–5%"]],
-    shot:"img/onlycans-peach.jpg",
-    range:[
-      {img:"img/onlycans-peach.jpg",name:"New Phone Who Dis",meta:"Peach &amp; raspberry &middot; 330 mL &middot; 4.5%",
-       copy:"Ripe peach with a raspberry tang underneath. Soft, sweet and gone faster than you planned."},
-      {img:"img/onlycans-apple.jpg",name:"U up?",meta:"Sour apple &amp; lime &middot; 330 mL &middot; 5%",
-       copy:"Sharp green apple cut with lime. More bite than your last situation, which is the entire point."}
-    ]
-  },
-  divot: {
-    name:"Divot", accent:"Urban Polo", italic:null,
-    tag:"Stomp the divots. Sip something better.",
-    blurb:"The official pour of Urban Polo. Two classic mixers rebuilt properly, in a can that belongs on the sideline and behind the bar.",
-    spec:[["Style","Premium mixers"],["Size","250 mL"],["ABV","5%"]],
-    shot:"img/divot-pair.jpg",
-    range:[
-      {img:"img/divot-pour.jpg",name:"Pink Gin &amp; Tonic",meta:"Rosé tonic, raspberry &amp; lime &middot; 5%",
-       copy:"Pink gin over rosé tonic with raspberry and lime. Dry, floral and far less sweet than the category deserves."},
-      {img:"img/divot-pair.jpg",name:"Vodka Soda",meta:"White peach &amp; yuzu &middot; 5%",
-       copy:"Clean vodka soda lifted with white peach and yuzu. Crisp enough to drink all afternoon in the sun."}
-    ],
-    gallery:[
-      {img:"img/divot-life-1.jpg",alt:"Two friends at a park picnic raising Divot cans"},
-      {img:"img/divot-life-2.jpg",alt:"A Divot Pink Gin and Tonic can held up to the camera at a street bar"},
-      {img:"img/divot-life-3.jpg",alt:"A Divot can in hand beside a cherry-print handbag"}
-    ]
+  bespoke: {
+    name:"Bespoke", accent:"Private label &middot; custom builds", italic:null,
+    soon:true,
+    tag:"Your drink, built properly.",
+    blurb:"Custom drinks development for venues, brands and events. We work out the liquid, the format and the look with you, then handle the run out of New Zealand.",
+    spec:[["Status","Coming soon"],["Made in","New Zealand"],["Enquiries","Open now"]],
+    soonNote:"We are putting this line together now. Tell us what you have in mind and we will come back to you first."
   }
 };
 
@@ -629,6 +638,61 @@ function wireFloats(){
     });
     tick++;
   }, 2200);
+}
+
+function wirePosers(){
+  if(window.__poserTimer) clearInterval(window.__poserTimer);
+  const posers=[...document.querySelectorAll('.poser')];
+  if(!posers.length) return;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function leads(p){
+    const svg=p.querySelector('.leads'); const stage=p.querySelector('.pstage');
+    if(!svg||!stage) return;
+    const lines=[...svg.querySelectorAll('line')], bubs=[...p.querySelectorAll('.bub')];
+    if(!lines.length) return;
+    if(!p.classList.contains('sel')){ lines.forEach(l=>l.setAttribute('x2', l.getAttribute('x1')||0)); return; }
+    const g=p.getBoundingClientRect(), s=stage.getBoundingClientRect();
+    bubs.forEach((b,i)=>{
+      const l=lines[i]; if(!l) return;
+      const r=b.getBoundingClientRect();
+      const x1=r.left+r.width/2-g.left;
+      const y1=(i===0 ? r.bottom+4 : r.top-4)-g.top;
+      const x2=s.left-g.left+s.width*0.5;
+      const y2=s.top-g.top+s.height*(i===0 ? 0.10 : 0.90);
+      l.setAttribute('x1',x1.toFixed(1)); l.setAttribute('y1',y1.toFixed(1));
+      l.setAttribute('x2',x2.toFixed(1)); l.setAttribute('y2',y2.toFixed(1));
+    });
+  }
+  function toggle(p){
+    const wasOpen=p.classList.contains('sel');
+    posers.forEach(q=>{ q.classList.remove('sel'); leads(q); });
+    if(!wasOpen){ p.classList.add('sel'); leads(p); setTimeout(()=>leads(p),80); }
+  }
+  posers.forEach(p=>{
+    p.addEventListener('click',ev=>{ ev.stopPropagation(); toggle(p); });
+    p.addEventListener('keydown',ev=>{
+      if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); ev.stopPropagation(); toggle(p); }
+    });
+  });
+  document.addEventListener('click',()=>posers.forEach(p=>{ p.classList.remove('sel'); leads(p); }));
+  window.addEventListener('resize',()=>posers.forEach(leads),{passive:true});
+
+  if(reduce) return;
+  const idx=posers.map(()=>0);
+  let tick=0;
+  window.__poserTimer=setInterval(()=>{
+    posers.forEach((p,i)=>{
+      if((tick+i)%2!==0) return;                       // the two never turn at the same moment
+      if(p.classList.contains('sel')) return;          // hold still while its notes are open
+      const imgs=[...p.querySelectorAll('.pimg')];
+      if(imgs.length<2) return;
+      imgs[idx[i]].classList.remove('show');
+      idx[i]=(idx[i]+1)%imgs.length;
+      imgs[idx[i]].classList.add('show');
+    });
+    tick++;
+  },1900);
 }
 
 function wireShop(){
@@ -759,9 +823,9 @@ function wireRenders(){
 
 const HOUSE = {
   name:"MDG Beverages", accent:"New Zealand drinks house",
-  tag:"Four brands, one bar cart.",
-  blurb:"Sparkling mimosa, sparkling ros&eacute;, vodka sodas and premium mixers. Each one built for the room it gets opened in, not the shelf it sits on.",
-  spec:[["Brands","Four"],["Made in","New Zealand"],["Supply","Venues &middot; retail &middot; distribution"]]
+  tag:"Built for the room, not the shelf.",
+  blurb:"Sparkling mimosa, sparkling ros&eacute;, and bespoke builds for venues and brands. Each one made for the room it gets opened in, not the shelf it sits on.",
+  spec:[["Brands","Two, plus bespoke"],["Made in","New Zealand"],["Supply","Venues &middot; retail &middot; distribution"]]
 };
 
 function selectHouse(){
@@ -782,8 +846,10 @@ function selectHouse(){
       <a class="cta solid" data-shop="store" data-buy="Shop the range" href="#"><span class="shop-label">Shop the range</span></a>
       <a class="cta" href="#range" style="margin-left:10px">See the brands</a>
     </div>
-    <div class="shot fade"><div class="hero-quad">${order.map(k=>`
-      <a href="#range" data-goto="${k}" aria-label="${BRANDS[k].name}"><img src="${BRANDS[k].shot}" alt="${BRANDS[k].name}"><b>${BRANDS[k].name}</b></a>`).join('')}</div></div>`;
+    <div class="shot fade"><div class="hero-quad">${order.map(k=>{const b=BRANDS[k];return `
+      <a href="#range" data-goto="${k}" aria-label="${b.name}">${b.shot
+        ? `<img src="${b.shot}" alt="${b.name}">`
+        : `<span class="soon-tile" aria-hidden="true"><i>Coming soon</i></span>`}<b>${b.name}</b></a>`;}).join('')}</div></div>`;
 
   const half=Array.from({length:6},()=>`<span><i>${HOUSE.name}</i>${HOUSE.tag}</span>`).join('');
   document.getElementById('marq').innerHTML=half+half;
@@ -795,7 +861,9 @@ function selectHouse(){
     </div>
     <div class="brandex">${order.map(k=>{const d=BRANDS[k];return `
       <a href="#top" data-goto="${k}" class="fade">
-        <div class="bx-pic"><img src="${d.shot}" alt="${d.name}" loading="lazy"></div>
+        <div class="bx-pic">${d.shot
+          ? `<img src="${d.shot}" alt="${d.name}" loading="lazy">`
+          : `<span class="soon-tile"><i>Coming soon</i></span>`}</div>
         <h3>${d.name}</h3>
         <p class="bx-accent">${d.accent}</p>
         <p>${d.tag}</p>
@@ -809,7 +877,7 @@ function selectHouse(){
   });
 }
 
-const order = ["solara","vanta","onlycans","divot"];
+const order = ["solara","vanta","bespoke"];
 const nav = document.getElementById('nav');
 const hero = document.getElementById('hero');
 const range = document.getElementById('range');
@@ -818,6 +886,7 @@ order.forEach(k=>{
   const b=document.createElement('button');
   b.type='button'; b.setAttribute('role','tab'); b.dataset.key=k;
   b.textContent=BRANDS[k].name;
+  if(BRANDS[k].soon){ b.classList.add('soon-tab'); b.insertAdjacentHTML('beforeend','<i>Soon</i>'); }
   b.onclick=()=>select(k);
   nav.appendChild(b);
 });
@@ -860,10 +929,14 @@ function select(k){
       <p class="tag">${d.tag}</p>
       <p class="blurb">${d.blurb}</p>
       <div class="spec">${d.spec.map(s=>`<div>${s[0]}<b>${s[1]}</b></div>`).join('')}</div>
-      <a class="cta solid" data-shop="${k}" data-buy="Buy ${d.name}" href="#"><span class="shop-label">Buy ${d.name}</span></a>
-      <a class="cta" href="#range" style="margin-left:10px">See the range</a>
+      ${d.soon
+        ? `<a class="cta solid" href="#trade">Register interest</a>`
+        : `<a class="cta solid" data-shop="${k}" data-buy="Buy ${d.name}" href="#"><span class="shop-label">Buy ${d.name}</span></a>`}
+      <a class="cta" href="#range" style="margin-left:10px">${d.soon ? 'Read more' : 'See the range'}</a>
     </div>
-    <div class="shot fade">${d.shotVideo && !matchMedia('(prefers-reduced-motion: reduce)').matches
+    <div class="shot fade">${!d.shot
+      ? `<span class="soon-tile big"><i>Coming soon</i></span>`
+      : d.shotVideo && !matchMedia('(prefers-reduced-motion: reduce)').matches
       ? `<video src="${d.shotVideo}" poster="${d.shot}" autoplay muted loop playsinline></video>`
       : `<img src="${d.shot}" alt="${d.name}">`}</div>`;
 
@@ -872,18 +945,30 @@ function select(k){
 
   range.innerHTML=`
     <div class="sechead">
-      <div><h2>The ${d.name} range</h2></div>
-      <a class="cta" style="margin:0" data-shop="${k}" data-buy="Buy ${d.name}" href="#"><span class="shop-label">Buy ${d.name}</span></a>
+      <div><h2>${d.soon ? `${d.name}` : `The ${d.name} range`}</h2></div>
+      ${d.soon ? `<a class="cta" style="margin:0" href="#trade">Register interest</a>`
+        : `<a class="cta" style="margin:0" data-shop="${k}" data-buy="Buy ${d.name}" href="#"><span class="shop-label">Buy ${d.name}</span></a>`}
     </div>
-    ${d.wheels ? `
+    ${d.soon ? `
+    <div class="soon-panel">
+      <p class="eyebrow">In development</p>
+      <h3>${d.tag}</h3>
+      <p>${d.soonNote}</p>
+      <a class="cta" href="#trade">Talk to us about a build</a>
+    </div>` : d.posers ? `
     <div class="solo">
-      <div class="wheels">
-      ${d.wheels.map(w=>`
-      <div class="orbit">
-        ${(w.bubbles||[]).map(x=>`<figure class="bub ${x.cls}"><span class="dot" aria-hidden="true"></span><b>${x.t}</b><span>${x.d}</span></figure>`).join('')}
+      <div class="posers">
+      ${d.posers.map((w,pi)=>`
+      <div class="poser" style="--delay:${(pi*1.7).toFixed(1)}s" role="button" tabindex="0"
+           aria-label="${w.label.replace(/&[a-z]+;/g,'')}, open the tasting notes">
+        ${(w.bubbles||[]).map(x=>`<figure class="bub ${x.cls}"><b>${x.t}</b><span>${x.d}</span></figure>`).join('')}
         <svg class="leads" width="100%" height="100%" aria-hidden="true">${(w.bubbles||[]).map(()=>'<line/>').join('')}</svg>
-        ${w.angles.map(a=>`
-        <figure class="gitem ${a.cls}"><span class="ring" aria-hidden="true"></span><img src="${a.src}" alt="${a.alt}" loading="lazy"></figure>`).join('')}
+        <div class="pstage">
+          <span class="ring" aria-hidden="true"></span>
+          ${w.angles.map((a,ai)=>`<img class="pimg${ai===0?' show':''}" src="${a.src}" alt="${a.alt}"${ai===0?'':' loading="lazy"'}>`).join('')}
+        </div>
+        <span class="pshadow" aria-hidden="true"></span>
+        <span class="plabel">${w.label}</span>
       </div>`).join('')}
       </div>
       ${panelsHTML(d,k)}
@@ -942,6 +1027,7 @@ function select(k){
   wireRenders();
   wireGallery();
   wireFloats();
+  wirePosers();
   wireShop();
 }
 selectHouse();
