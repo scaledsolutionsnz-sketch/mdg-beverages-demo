@@ -421,6 +421,16 @@ footer b{font-family:var(--display);color:#F7F8F7;font-size:18px;letter-spacing:
   nav button{min-width:104px;font-size:13px;padding:16px 8px}
   .trade{display:none}
 }
+/* three tabs plus the mark do not fit a phone at the desktop min-width */
+@media (max-width:560px){
+  .house{padding:0 12px}
+  .hlogo{height:26px}
+  nav button{min-width:0;padding:16px 4px;font-size:11.5px;letter-spacing:.1em}
+  nav button.soon-tab i{margin-left:5px;padding:2px 4px;font-size:8px}
+}
+@media (max-width:400px){
+  nav button.soon-tab i{display:none}
+}
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
   html{scroll-behavior:auto}
