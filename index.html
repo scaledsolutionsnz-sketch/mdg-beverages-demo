@@ -157,12 +157,24 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 .tri-scrim{position:absolute;inset:0;z-index:1;
   background:linear-gradient(180deg,rgba(0,0,0,.30) 0%,rgba(0,0,0,.42) 55%,rgba(0,0,0,.72) 100%)}
 .tri-item{position:relative;z-index:2;height:min(74vh,100%);display:flex;flex-direction:column;
-  align-items:center;justify-content:flex-end;text-decoration:none;min-width:0}
+  align-items:center;justify-content:flex-end;text-decoration:none;min-width:0;
+  opacity:1;transition:opacity .45s ease}
+/* the hovered vessel lights up in its own brand colour */
+.tri-item::before{content:"";position:absolute;left:50%;top:46%;z-index:-1;
+  width:132%;height:74%;transform:translate(-50%,-50%) scale(.72);border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,
+    color-mix(in srgb, var(--glow,#fff) 46%, transparent) 0%,
+    color-mix(in srgb, var(--glow,#fff) 16%, transparent) 46%,
+    transparent 74%);
+  opacity:0;transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+.tri-item:hover::before,.tri-item:focus-visible::before{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.tri:hover .tri-item{opacity:.52}
+.tri:hover .tri-item:hover,.tri .tri-item:focus-visible{opacity:1}
 .tri-item img{max-height:var(--h,80%);max-width:100%;width:auto;object-fit:contain;
   filter:drop-shadow(0 26px 34px rgba(0,0,0,.75));
   transition:transform .5s cubic-bezier(.2,.8,.2,1),filter .5s ease}
 .tri-item:hover img,.tri-item:focus-visible img{transform:translateY(-12px) scale(1.05);
-  filter:drop-shadow(0 34px 42px rgba(0,0,0,.85))}
+  filter:drop-shadow(0 34px 42px rgba(0,0,0,.85)) brightness(1.08)}
 .tri-item b{margin-top:16px;font-family:var(--display);font-size:clamp(11px,1.1vw,15px);
   font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:#fff;white-space:nowrap;
   text-shadow:0 2px 18px rgba(0,0,0,.9);transition:color .25s}
@@ -855,9 +867,9 @@ function wireRenders(){
 }
 
 const HERO_LINEUP = [
-  {k:"solara", h:"54%", img:"img/solara-can-render.png",   label:"Solara",       alt:"Solara Sparkling Mimosa can"},
-  {k:"vanta",  h:"54%", img:"img/vanta-can-render.png",    label:"Vanta can",    alt:"Vanta Ros&eacute; 250 mL can"},
-  {k:"vanta",  h:"86%", img:"img/vanta-bottle-render.png", label:"Vanta bottle", alt:"Vanta Ros&eacute; 750 mL bottle"}
+  {k:"solara", h:"54%", glow:"#D9793F", img:"img/solara-can-render.png",   label:"Solara",       alt:"Solara Sparkling Mimosa can"},
+  {k:"vanta",  h:"54%", glow:"#EC008C", img:"img/v-can-1.png",             label:"Vanta can",    alt:"Vanta Ros&eacute; 250 mL can"},
+  {k:"vanta",  h:"86%", glow:"#EC008C", img:"img/vanta-bottle-render.png", label:"Vanta bottle", alt:"Vanta Ros&eacute; 750 mL bottle"}
 ];
 
 const HOUSE = {
@@ -890,7 +902,7 @@ function selectHouse(){
         `<video class="tri-vid" src="img/vanta-bg.mp4" autoplay muted loop playsinline aria-hidden="true"></video>`}
       <span class="tri-scrim" aria-hidden="true"></span>
       ${HERO_LINEUP.map(x=>`
-      <a class="tri-item" href="#top" data-goto="${x.k}" style="--h:${x.h}" aria-label="${x.label}">
+      <a class="tri-item" href="#top" data-goto="${x.k}" style="--h:${x.h};--glow:${x.glow}" aria-label="${x.label}">
         <img src="${x.img}" alt="${x.alt}" width="364" height="1000">
         <b>${x.label}</b>
       </a>`).join('')}
