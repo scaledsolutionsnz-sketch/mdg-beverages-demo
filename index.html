@@ -9,16 +9,17 @@
 <meta property="og:description" content="A New Zealand drinks house. Built for the room it gets opened in.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://mdg-beverages-demo.vercel.app/img/solara.jpg">
-<meta name="theme-color" content="#07070A">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2307070A'/%3E%3Ctext x='50' y='66' font-family='Georgia,serif' font-size='44' letter-spacing='2' text-anchor='middle' fill='%23C9A24B'%3EM%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#050506">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#07070A; --bone:#F2EDE4; --brass:#C9A24B;
-  --bg:#07070A; --fg:#F2EDE4; --accent:#C9A24B; --muted:rgba(242,237,228,.6);
-  --rule:rgba(242,237,228,.16);
+  --ink:#050506; --bone:#F7F8F7; --brass:#C6CBD2;
+  --bg:#050506; --fg:#F7F8F7; --accent:#C6CBD2; --muted:rgba(247,248,247,.58);
+  --rule:rgba(247,248,247,.15);
   --display:'Bodoni Moda',Georgia,serif;
   --body:'Jost',-apple-system,Helvetica,Arial,sans-serif;
   --pad:clamp(20px,5vw,72px);
@@ -29,24 +30,24 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-
   transition:background .6s ease,color .6s ease;overflow-x:hidden}
 body[data-brand="solara"]{--bg:#120A06;--fg:#F6EBDD;--accent:#D9793F;--muted:rgba(246,235,221,.6);--rule:rgba(246,235,221,.16)}
 body[data-brand="vanta"]{--bg:#020000;--fg:#F6E9F1;--accent:#EC008C;--muted:rgba(246,233,241,.6);--rule:rgba(246,233,241,.16)}
-body[data-brand="bespoke"]{--bg:#0A0A0C;--fg:#EFEDE7;--accent:#C9A24B;--muted:rgba(239,237,231,.6);--rule:rgba(239,237,231,.16)}
+body[data-brand="bespoke"]{--bg:#08080A;--fg:#F7F8F7;--accent:#C6CBD2;--muted:rgba(247,248,247,.58);--rule:rgba(247,248,247,.15)}
 
 a{color:inherit}
 .eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;font-weight:500;color:var(--accent)}
 .rule{height:1px;background:var(--rule);border:0;margin:0}
 
 /* ---------- age gate ---------- */
-#gate{position:fixed;inset:0;z-index:100;background:#07070A;color:#F2EDE4;
+#gate{position:fixed;inset:0;z-index:100;background:#050506;color:#F7F8F7;
   display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
 #gate .in{max-width:460px}
 #gate .mark{font-family:var(--display);font-size:38px;letter-spacing:.14em;margin:0 0 6px}
-#gate p{font-size:15px;line-height:1.7;color:rgba(242,237,228,.66);margin:18px 0 28px}
+#gate p{font-size:15px;line-height:1.7;color:rgba(247,248,247,.66);margin:18px 0 28px}
 #gate .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 #gate button{font:inherit;font-size:13px;letter-spacing:.2em;text-transform:uppercase;
-  padding:14px 30px;border:1px solid #C9A24B;background:none;color:#F2EDE4;cursor:pointer;transition:.2s}
-#gate button.yes{background:#C9A24B;color:#07070A}
+  padding:14px 30px;border:1px solid #C6CBD2;background:none;color:#F7F8F7;cursor:pointer;transition:.2s}
+#gate button.yes{background:#C6CBD2;color:#050506}
 #gate button:hover{opacity:.82}
-#gate .no{font-size:13px;color:rgba(242,237,228,.5);margin-top:22px;display:none}
+#gate .no{font-size:13px;color:rgba(247,248,247,.5);margin-top:22px;display:none}
 
 /* ---------- brand bar ---------- */
 header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--rule);
@@ -57,8 +58,10 @@ header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px s
   font:inherit;text-align:left;transition:color .25s}
 .house:hover{color:var(--accent)}
 body[data-brand="house"] .house b{color:var(--accent)}
-.house b{font-family:var(--display);font-size:19px;letter-spacing:.2em;font-weight:500}
-.house span{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);display:block;margin-top:2px}
+.hlogo{height:38px;width:auto;display:block;transition:opacity .25s}
+@media(max-width:880px){.hlogo{height:30px}}
+.house:hover .hlogo{opacity:.72}
+#gate .glogo{height:clamp(58px,9vw,84px);width:auto;margin:0 auto 22px}
 nav{display:flex;flex:1;overflow-x:auto;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
 nav button{flex:1;min-width:118px;background:none;border:0;border-right:1px solid var(--rule);
@@ -372,7 +375,7 @@ nav button.soon-tab i{font-style:normal;font-size:9px;letter-spacing:.18em;text-
 @media (max-width:880px){.life{grid-template-columns:repeat(2,1fr)}.life figure:last-child{grid-column:span 2;aspect-ratio:3/2}}
 
 /* ---------- house ---------- */
-.house-band{background:var(--ink);color:var(--bone);--muted:rgba(242,237,228,.6);--rule:rgba(242,237,228,.14);--accent:var(--brass)}
+.house-band{background:var(--ink);color:var(--bone);--muted:rgba(247,248,247,.6);--rule:rgba(247,248,247,.14);--accent:var(--brass)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,80px);align-items:start}
 .two p{font-size:16px;line-height:1.85;color:var(--muted);margin:0 0 18px}
 .lead{font-family:var(--display);font-size:clamp(22px,3vw,34px);line-height:1.35;color:var(--bone);margin:0}
@@ -393,7 +396,7 @@ button.send{font:inherit;font-size:11px;letter-spacing:.24em;text-transform:uppe
 button.send:hover{opacity:.85}
 select option{color:#111}
 
-footer{background:#040406;color:rgba(242,237,228,.5);padding:52px var(--pad);font-size:13px;line-height:1.9;position:relative;z-index:1}
+footer{background:#030304;color:rgba(247,248,247,.5);padding:52px var(--pad);font-size:13px;line-height:1.9;position:relative;z-index:1}
 #bgvid{position:fixed;inset:0;z-index:0;pointer-events:none}
 #spotlight{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;
   transition:opacity .9s ease;
@@ -404,7 +407,8 @@ body.spot-on #spotlight{opacity:1}
 #bgvid video{width:100%;height:100%;object-fit:cover;display:block}
 main,header{position:relative;z-index:1}
 footer .frow{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-end}
-footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:.2em;font-weight:500}
+footer b{font-family:var(--display);color:#F7F8F7;font-size:18px;letter-spacing:.2em;font-weight:500}
+.flogo{height:30px;width:auto;display:block;margin-bottom:12px;opacity:.9}
 .warn{margin-top:26px;padding-top:20px;border-top:1px solid rgba(242,237,228,.12);max-width:70ch}
 
 @media (max-width:880px){
@@ -432,8 +436,7 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
 
 <div id="gate" role="dialog" aria-modal="true" aria-label="Age verification">
   <div class="in">
-    <p class="mark">MDG</p>
-    <p class="eyebrow">Beverages</p>
+    <img class="glogo" src="img/mdg-logo.png" alt="MDG Beverages" width="640" height="330">
     <p>You must be 18 or over to enter this site. Please confirm your age.</p>
     <div class="row">
       <button class="yes" id="gyes">I am 18 or over</button>
@@ -445,7 +448,7 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
 
 <header>
   <div class="bar">
-    <button class="house" type="button" id="homeBtn" aria-label="MDG Beverages home"><div><b>MDG</b><span>Beverages</span></div></button>
+    <button class="house" type="button" id="homeBtn" aria-label="MDG Beverages home"><img class="hlogo" src="img/mdg-logo.png" alt="MDG Beverages" width="640" height="330"></button>
     <nav id="nav" role="tablist" aria-label="Brands"></nav>
     <a class="trade" data-shop="store" data-buy="Shop" href="#"><span class="shop-label">Shop</span></a>
     <a class="trade" href="#trade">Trade enquiries</a>
@@ -518,7 +521,7 @@ footer b{font-family:var(--display);color:#F2EDE4;font-size:18px;letter-spacing:
 
 <footer>
   <div class="frow">
-    <div><b>MDG</b><br>Beverages, New Zealand</div>
+    <div><img class="flogo" src="img/mdg-logo.png" alt="MDG Beverages" width="640" height="330" loading="lazy">New Zealand</div>
     <div>hello@mdgbeverages.com<br>Trade &middot; Distribution &middot; Events</div>
     <div>Instagram<br>Facebook</div>
   </div>
