@@ -33,15 +33,21 @@ body[data-brand="vanta"]{--bg:#020000;--fg:#F6E9F1;--accent:#EC008C;--muted:rgba
 body[data-brand="bespoke"]{--bg:#08080A;--fg:#F7F8F7;--accent:#C6CBD2;--muted:rgba(247,248,247,.58);--rule:rgba(247,248,247,.15)}
 
 a{color:inherit}
+#grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 ::selection{background:var(--accent);color:var(--bg)}
-html{accent-color:var(--accent)}
+html{accent-color:var(--accent);scrollbar-width:thin;scrollbar-color:color-mix(in srgb, var(--accent) 55%, var(--bg)) var(--bg)}
 input,textarea,select{caret-color:var(--accent)}
 .eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;font-weight:500;color:var(--accent)}
 .rule{height:1px;background:var(--rule);border:0;margin:0}
 
 /* ---------- age gate ---------- */
-#gate{position:fixed;inset:0;z-index:100;background:#050506;color:#F7F8F7;
-  display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
+#gate{position:fixed;inset:0;z-index:100;background:radial-gradient(80% 90% at 50% 40%,#0B0B0D 0%,#050506 70%);color:#F7F8F7;
+  display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;
+  transition:opacity .8s ease,visibility .8s ease}
+#gate.away{opacity:0;visibility:hidden}
+#gate.away .in{transform:translateY(-10px)}
+#gate .in{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
 #gate .in{max-width:460px}
 #gate .mark{font-family:var(--display);font-size:38px;letter-spacing:.14em;margin:0 0 6px}
 #gate p{font-size:15px;line-height:1.7;color:rgba(247,248,247,.66);margin:18px 0 28px}
@@ -271,7 +277,7 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 .orbit.sel .bub.b3{transition-delay:.14s}
 .bub b{display:block;font-family:var(--body);font-size:10.5px;font-weight:600;letter-spacing:.16em;
   text-transform:uppercase;color:var(--fg);margin-bottom:3px}
-.bub span{display:block;font-size:11.5px;line-height:1.5;color:var(--muted)}
+.bub span{display:block;font-size:11.5px;line-height:1.5;font-weight:400;color:var(--muted)}
 .bub .dot{position:absolute;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
 .bub.b1,.bub.b2{text-align:right}
 .bub.b1 .dot,.bub.b2 .dot{right:-9px}
@@ -318,7 +324,7 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
   box-shadow:0 26px 60px -34px rgba(0,0,0,.9), inset 0 1px 0 color-mix(in srgb, var(--fg) 16%, transparent)}
 .spec-card h4{font-family:var(--display);font-size:20px;font-weight:500;margin:0 0 12px;color:var(--fg)}
 .spec-card ul{list-style:none;margin:0;padding:0;display:grid;gap:3px}
-.spec-card li{font-size:13px;line-height:1.6;color:color-mix(in srgb, var(--fg) 82%, transparent);
+.spec-card li{font-size:13px;line-height:1.6;font-weight:400;color:color-mix(in srgb, var(--fg) 82%, transparent);
   display:flex;align-items:baseline;gap:9px}
 .spec-card li::before{content:"";width:3px;height:3px;border-radius:50%;flex:0 0 auto;
   background:color-mix(in srgb, var(--accent) 85%, transparent);transform:translateY(-2px)}
@@ -414,7 +420,7 @@ nav button.soon-tab i{font-style:normal;font-size:9px;letter-spacing:.18em;text-
 
 form{display:grid;gap:16px;max-width:520px;margin-top:30px}
 form label{display:grid;gap:7px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-input,textarea,select{font:inherit;font-size:15px;padding:14px 16px;background:transparent;
+input,textarea,select{font:inherit;font-weight:400;font-size:15px;padding:14px 16px;background:transparent;
   border:1px solid var(--rule);color:inherit;border-radius:0}
 input::placeholder,textarea::placeholder{color:var(--muted);opacity:.55}
 input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-offset:2px;border-color:transparent}
@@ -476,6 +482,7 @@ footer b{font-family:var(--display);color:#F7F8F7;font-size:18px;letter-spacing:
 
 <div id="gate" role="dialog" aria-modal="true" aria-label="Age verification">
   <div class="in">
+    <p class="eyebrow" style="margin:0 0 18px">A New Zealand drinks house</p>
     <img class="glogo" src="img/mdg-logo.png" alt="MDG Beverages" width="640" height="330">
     <p>You must be 18 or over to enter this site. Please confirm your age.</p>
     <div class="row">
@@ -497,6 +504,7 @@ footer b{font-family:var(--display);color:#F7F8F7;font-size:18px;letter-spacing:
 
 <div id="bgvid" aria-hidden="true" hidden><video id="bgvidEl" muted loop playsinline></video></div>
 <div id="spotlight" aria-hidden="true"></div>
+<div id="grain" aria-hidden="true"></div>
 
 <main>
   <div class="hero" id="hero"></div>
@@ -1097,10 +1105,11 @@ wireShop();
 document.getElementById('homeBtn').addEventListener('click', ()=>{ selectHouse(); window.scrollTo({top:0,behavior:'smooth'}); });
 
 const gate=document.getElementById('gate');
-try{ if(sessionStorage.getItem('mdg-age')==='ok') gate.style.display='none'; }catch(e){}
+try{ if(sessionStorage.getItem('mdg-age')==='ok'){ gate.style.display='none'; } }catch(e){}
 document.getElementById('gyes').onclick=()=>{
   try{sessionStorage.setItem('mdg-age','ok')}catch(e){}
-  gate.style.display='none';
+  gate.classList.add('away');
+  setTimeout(()=>{ gate.style.display='none'; }, 850);
 };
 document.getElementById('gno').onclick=()=>{document.getElementById('gmsg').style.display='block'};
 
