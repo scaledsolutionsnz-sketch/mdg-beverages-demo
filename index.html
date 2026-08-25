@@ -33,6 +33,9 @@ body[data-brand="vanta"]{--bg:#020000;--fg:#F6E9F1;--accent:#EC008C;--muted:rgba
 body[data-brand="bespoke"]{--bg:#08080A;--fg:#F7F8F7;--accent:#C6CBD2;--muted:rgba(247,248,247,.58);--rule:rgba(247,248,247,.15)}
 
 a{color:inherit}
+::selection{background:var(--accent);color:var(--bg)}
+html{accent-color:var(--accent)}
+input,textarea,select{caret-color:var(--accent)}
 .eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;font-weight:500;color:var(--accent)}
 .rule{height:1px;background:var(--rule);border:0;margin:0}
 
@@ -422,6 +425,8 @@ button.send:hover{opacity:.85}
 select option{color:#111}
 
 footer{background:#030304;color:rgba(247,248,247,.5);padding:52px var(--pad);font-size:13px;line-height:1.9;position:relative;z-index:1}
+footer a{text-decoration:none;border-bottom:1px solid rgba(247,248,247,.25);transition:color .25s,border-color .25s}
+footer a:hover{color:var(--accent);border-color:var(--accent)}
 #bgvid{position:fixed;inset:0;z-index:0;pointer-events:none}
 #spotlight{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;
   transition:opacity .9s ease;
@@ -557,15 +562,15 @@ footer b{font-family:var(--display);color:#F7F8F7;font-size:18px;letter-spacing:
 <footer>
   <div class="frow">
     <div><img class="flogo" src="img/mdg-logo.png" alt="MDG Beverages" width="640" height="330" loading="lazy">New Zealand</div>
-    <div>hello@mdgbeverages.com<br>Trade &middot; Distribution &middot; Events</div>
-    <div>Instagram<br>Facebook</div>
+    <div><a id="femail" data-u="hello" data-d="mdgbeverages.com" href="#">Email us</a><br>Trade &middot; Distribution &middot; Events</div>
+    <div><a href="https://www.instagram.com/explore/search/keyword/?q=MDG%20Beverages" target="_blank" rel="noopener">Instagram</a><br><a href="https://www.facebook.com/search/top?q=MDG%20Beverages" target="_blank" rel="noopener">Facebook</a></div>
   </div>
   <p class="warn">R18. It is an offence to supply alcohol to a person under 18 years. Please enjoy our drinks responsibly. &copy; <span id="yr"></span> MDG Beverages.</p>
 </footer>
 
 <script>
 /* ─────────────────────────────────────────────────────────────
-   SHOPIFY LINKS — paste the store URLs here when the shop is live.
+   SHOPIFY LINKS: paste the store URLs here when the shop is live.
    Leave a value empty ("") and its button shows "Store opening soon"
    instead of linking anywhere.
 
@@ -1125,6 +1130,22 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'Intersecti
   document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
 }
 document.getElementById('yr').textContent=new Date().getFullYear();
+
+// footer email assembled in JS, never literal in the HTML
+(function(){
+  const a=document.getElementById('femail'); if(!a) return;
+  const to=a.dataset.u+'@'+a.dataset.d;
+  a.textContent=to;
+  a.href='https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(to);
+  a.target='_blank'; a.rel='noopener';
+})();
+
+// the browser chrome follows the active brand
+const themeMeta=document.querySelector('meta[name="theme-color"]');
+new MutationObserver(()=>{
+  if(themeMeta) themeMeta.content=getComputedStyle(document.body).backgroundColor;
+}).observe(document.body,{attributes:true,attributeFilter:['data-brand']});
+if(themeMeta) themeMeta.content=getComputedStyle(document.body).backgroundColor;
 </script>
 </body>
 </html>
