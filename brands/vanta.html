@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vanta | Sparkling Ros&eacute; | MDG Beverages</title>
+<meta name="description" content="Vanta is a dark fruit sparkling rosé from MDG Beverages, in 250 mL can and 750 mL bottle. Trade enquiries welcome.">
+<meta property="og:title" content="Vanta | MDG Beverages">
+<meta property="og:description" content="Vanta is a dark fruit sparkling rosé from MDG Beverages, in 250 mL can and 750 mL bottle. Trade enquiries welcome.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://mdg-beverages-demo.vercel.app/img/vanta.jpg">
+<meta name="theme-color" content="#050506">
+<link rel="icon" href="/img/favicon.png">
+<link rel="apple-touch-icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body data-brand="vanta">
+
+<div id="gate" role="dialog" aria-modal="true" aria-label="Age verification">
+  <div class="in">
+    <p class="eyebrow" style="margin:0 0 18px">A New Zealand drinks house</p>
+    <img class="glogo" src="/img/mdg-logo.png" alt="MDG Beverages" width="640" height="330">
+    <p>You must be 18 or over to enter this site. Please confirm your age.</p>
+    <div class="row">
+      <button class="yes" id="gyes">I am 18 or over</button>
+      <button id="gno">I am under 18</button>
+    </div>
+    <p class="no" id="gmsg">Sorry, you need to be 18 or over to view this site.</p>
+  </div>
+</div>
+
+<header>
+  <div class="bar">
+    <a class="house" href="/" aria-label="MDG Beverages home"><img class="hlogo" src="/img/mdg-logo.png" alt="MDG Beverages" width="640" height="330"></a>
+    <nav class="navmenu" aria-label="Brands"><div class="brands-menu" data-current="vanta"></div></nav>
+    <a class="trade" data-shop="store" data-buy="Shop" href="#"><span class="shop-label">Shop</span></a>
+    <a class="trade" href="/#trade">Trade enquiries</a>
+  </div>
+</header>
+
+<div id="grain" aria-hidden="true"></div>
+
+<main>
+  <section>
+    <p class="crumb"><a href="/">MDG Beverages</a> &nbsp;&middot;&nbsp; Brands &nbsp;&middot;&nbsp; Vanta</p>
+  </section>
+
+  <section class="profile">
+    <div class="pf-top">
+      <div class="reveal">
+        <p class="eyebrow">Sparkling ros&eacute;</p>
+        <h1>Vanta</h1>
+        <p class="pf-tag">Tonight we Vanta.</p>
+        <div class="pf-body"><p>A sparkling ros&eacute; built for the back half of the night. Dark berry fruit, a fine and persistent bead, and a dry finish that keeps it away from the sweet ros&eacute; end of the shelf.</p>
+          <p>Two formats, one liquid. The 750 mL bottle is the table service and celebration pour, the one that has to say something before it is opened. The 250 mL can puts the same wine into festivals, poolside and any room where glass is not welcome.</p>
+          <p>Produced and packed in New Zealand. Launching late 2026 &mdash; talk to us now about allocation and launch pricing.</p></div>
+        <div class="pf-spec"><div>Style<b>Sparkling ros&eacute;</b></div><div>Formats<b>250 mL can &middot; 750 mL bottle</b></div><div>Launch<b>Late 2026</b></div><div>Availability<b>Pre-launch</b></div></div>
+        
+        <div class="pf-actions">
+          <span data-brand-site="vanta"></span>
+          <a class="cta solid" data-shop="vanta" data-buy="Buy Vanta" href="#"><span class="shop-label">Buy Vanta</span></a>
+          <a class="cta" href="/#trade">Trade enquiries</a>
+        </div>
+      </div>
+      <div class="pf-shot reveal"><img src="/img/vanta.jpg" alt="Vanta Sparkling Ros&eacute;" width="1200" height="1500" loading="lazy"></div>
+    </div>
+
+    <div class="pf-gallery"><figure class="reveal"><img src="/img/vanta-bottle-render.png" alt="Vanta bottle, front" loading="lazy"></figure><figure class="reveal"><img src="/img/v-can-1.png" alt="Vanta can, front" loading="lazy"></figure><figure class="reveal"><img src="/img/v-bottle-1.png" alt="Vanta bottle, high angle" loading="lazy"></figure><figure class="reveal"><img src="/img/v-bottle-3.png" alt="Vanta bottle, low angle" loading="lazy"></figure></div>
+  </section>
+</main>
+
+<footer>
+  <div class="frow">
+    <div><img class="flogo" src="/img/mdg-logo.png" alt="MDG Beverages" width="640" height="330" loading="lazy">New Zealand</div>
+    <div><a id="femail" data-u="hello" data-d="mdgbeverages.com" href="#">Email us</a><br>Trade &middot; Distribution &middot; Events</div>
+    <div><a href="https://www.instagram.com/explore/search/keyword/?q=MDG%20Beverages" target="_blank" rel="noopener">Instagram</a><br><a href="https://www.facebook.com/search/top?q=MDG%20Beverages" target="_blank" rel="noopener">Facebook</a></div>
+  </div>
+  <p class="warn">R18. It is an offence to supply alcohol to a person under 18 years. Please enjoy our drinks responsibly. &copy; <span id="yr"></span> MDG Beverages.</p>
+</footer>
+
+<script src="/assets/site.js"></script>
+<script>initSite();</script>
+</body>
+</html>

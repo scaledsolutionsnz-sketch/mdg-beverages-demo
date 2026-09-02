@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solara | Sparkling Mimosa | MDG Beverages</title>
+<meta name="description" content="Solara is a blood orange and stone fruit sparkling mimosa from MDG Beverages. 250 mL, 7%. Trade enquiries welcome.">
+<meta property="og:title" content="Solara | MDG Beverages">
+<meta property="og:description" content="Solara is a blood orange and stone fruit sparkling mimosa from MDG Beverages. 250 mL, 7%. Trade enquiries welcome.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://mdg-beverages-demo.vercel.app/img/solara.jpg">
+<meta name="theme-color" content="#050506">
+<link rel="icon" href="/img/favicon.png">
+<link rel="apple-touch-icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body data-brand="solara">
+
+<div id="gate" role="dialog" aria-modal="true" aria-label="Age verification">
+  <div class="in">
+    <p class="eyebrow" style="margin:0 0 18px">A New Zealand drinks house</p>
+    <img class="glogo" src="/img/mdg-logo.png" alt="MDG Beverages" width="640" height="330">
+    <p>You must be 18 or over to enter this site. Please confirm your age.</p>
+    <div class="row">
+      <button class="yes" id="gyes">I am 18 or over</button>
+      <button id="gno">I am under 18</button>
+    </div>
+    <p class="no" id="gmsg">Sorry, you need to be 18 or over to view this site.</p>
+  </div>
+</div>
+
+<header>
+  <div class="bar">
+    <a class="house" href="/" aria-label="MDG Beverages home"><img class="hlogo" src="/img/mdg-logo.png" alt="MDG Beverages" width="640" height="330"></a>
+    <nav class="navmenu" aria-label="Brands"><div class="brands-menu" data-current="solara"></div></nav>
+    <a class="trade" data-shop="store" data-buy="Shop" href="#"><span class="shop-label">Shop</span></a>
+    <a class="trade" href="/#trade">Trade enquiries</a>
+  </div>
+</header>
+
+<div id="grain" aria-hidden="true"></div>
+
+<main>
+  <section>
+    <p class="crumb"><a href="/">MDG Beverages</a> &nbsp;&middot;&nbsp; Brands &nbsp;&middot;&nbsp; Solara</p>
+  </section>
+
+  <section class="profile">
+    <div class="pf-top">
+      <div class="reveal">
+        <p class="eyebrow">Sparkling mimosa</p>
+        <h1>Solara</h1>
+        <p class="pf-tag">By invitation.</p>
+        <div class="pf-body"><p>Blood orange and stone fruit over a dry sparkling base, with no added syrup. Citrus forward, dry through the finish, and built to stay drinkable across a long session rather than peak on the first mouthful.</p>
+          <p>It sells into venues as an aperitif pour and into retail as a single-serve can. The format suits poolside, festivals and anywhere glass is awkward, and the liquid holds up served cold and straight from the can or over ice with a wedge of blood orange.</p>
+          <p>Produced and packed in New Zealand. Available now to venues, bottle stores, distributors and event buyers.</p></div>
+        <div class="pf-spec"><div>Style<b>Sparkling mimosa</b></div><div>Format<b>250 mL can</b></div><div>ABV<b>7%</b></div><div>Availability<b>Available now</b></div></div>
+        
+        <div class="pf-actions">
+          <span data-brand-site="solara"></span>
+          <a class="cta solid" data-shop="solara" data-buy="Buy Solara" href="#"><span class="shop-label">Buy Solara</span></a>
+          <a class="cta" href="/#trade">Trade enquiries</a>
+        </div>
+      </div>
+      <div class="pf-shot reveal"><img src="/img/solara.jpg" alt="Solara Sparkling Mimosa" width="1200" height="1500" loading="lazy"></div>
+    </div>
+
+    <div class="pf-gallery"><figure class="reveal"><img src="/img/solara-can-render.png" alt="Solara can, front" loading="lazy"></figure><figure class="reveal"><img src="/img/solara-can-angled.png" alt="Solara can, angled from above" loading="lazy"></figure><figure class="reveal"><img src="/img/solara-can-lowangle.png" alt="Solara can, low angle" loading="lazy"></figure></div>
+  </section>
+</main>
+
+<footer>
+  <div class="frow">
+    <div><img class="flogo" src="/img/mdg-logo.png" alt="MDG Beverages" width="640" height="330" loading="lazy">New Zealand</div>
+    <div><a id="femail" data-u="hello" data-d="mdgbeverages.com" href="#">Email us</a><br>Trade &middot; Distribution &middot; Events</div>
+    <div><a href="https://www.instagram.com/explore/search/keyword/?q=MDG%20Beverages" target="_blank" rel="noopener">Instagram</a><br><a href="https://www.facebook.com/search/top?q=MDG%20Beverages" target="_blank" rel="noopener">Facebook</a></div>
+  </div>
+  <p class="warn">R18. It is an offence to supply alcohol to a person under 18 years. Please enjoy our drinks responsibly. &copy; <span id="yr"></span> MDG Beverages.</p>
+</footer>
+
+<script src="/assets/site.js"></script>
+<script>initSite();</script>
+</body>
+</html>
