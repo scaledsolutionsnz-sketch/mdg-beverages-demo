@@ -145,6 +145,18 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
   gap:clamp(4px,1vw,16px);
   padding:clamp(26px,5vh,60px) clamp(12px,2vw,30px) clamp(30px,6vh,64px)}
 .tri-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+/* House hero. The homepage names no individual brand above the fold, so the
+   product lineup is replaced by the MDG mark over the pour footage. That
+   footage is Vanta's and carries its pink, so it is pulled back to read as
+   house texture. Remove the filter line to restore the original colour. */
+.housemark{position:relative;height:100%;min-height:340px;overflow:hidden;background:#000;
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(26px,5vh,60px) clamp(20px,4vw,60px)}
+.housemark .tri-vid{filter:saturate(.24) brightness(.8)}
+.housemark .hm-logo{position:relative;z-index:2;width:min(60%,400px);height:auto;
+  object-fit:contain;animation:none;filter:drop-shadow(0 18px 50px rgba(0,0,0,.7))}
+@media(max-width:560px){.housemark{min-height:300px}
+  .housemark .hm-logo{width:min(72%,300px)}}
 .tri-scrim{position:absolute;inset:0;z-index:1;
   background:linear-gradient(180deg,rgba(0,0,0,.30) 0%,rgba(0,0,0,.42) 55%,rgba(0,0,0,.72) 100%)}
 .tri-item{position:relative;z-index:2;height:min(74vh,100%);display:flex;flex-direction:column;

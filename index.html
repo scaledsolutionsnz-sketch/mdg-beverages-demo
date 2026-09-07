@@ -152,22 +152,17 @@
    whichever brand happens to load first: each brand has its own page, and
    this page points at them. */
 
+/* Nothing in the hero names an individual brand. The brands get introduced
+   further down, on their own terms, in the brands grid. */
 const HOUSE = {
   name:"MDG Beverages", accent:"New Zealand drinks house",
   tag:"Built for the room, not the shelf.",
-  blurb:"Sparkling mimosa, sparkling ros&eacute;, and bespoke builds for venues and brands. Each one made for the room it gets opened in, not the shelf it sits on.",
-  spec:[["Brands","Two, plus bespoke"],["Made in","New Zealand"],["Supply","Venues &middot; retail &middot; distribution"]]
+  blurb:"We build drinks for the moment they get opened. Blending, packaging and supply, handled out of New Zealand, for our own brands and for private label.",
+  spec:[["Capability","Blending &middot; packaging"],["Made in","New Zealand"],["Supply","Venues &middot; retail &middot; distribution"]]
 };
-
-const HERO_LINEUP = [
-  {k:"solara", h:"54%", glow:"#D9793F", img:"img/solara-can-render.png",   label:"Solara",       alt:"Solara Sparkling Mimosa can"},
-  {k:"vanta",  h:"54%", glow:"#EC008C", img:"img/v-can-1.png",             label:"Vanta can",    alt:"Vanta Ros&eacute; 250 mL can"},
-  {k:"vanta",  h:"86%", glow:"#EC008C", img:"img/vanta-bottle-render.png", label:"Vanta bottle", alt:"Vanta Ros&eacute; 750 mL bottle"}
-];
 
 const hero  = document.getElementById('hero');
 const range = document.getElementById('range');
-const urlFor = k => (MDG_BRANDS.find(b => b.key === k) || {}).url || '/';
 
 function renderHouse(){
   hero.className = 'hero house-hero';
@@ -181,15 +176,11 @@ function renderHouse(){
       <a class="cta solid" data-shop="store" data-buy="Shop the range" href="#"><span class="shop-label">Shop the range</span></a>
       <a class="cta" href="#range" style="margin-left:10px">See the brands</a>
     </div>
-    <div class="shot fade"><div class="tri">
+    <div class="shot fade"><div class="housemark">
       ${matchMedia('(prefers-reduced-motion: reduce)').matches ? '' :
         `<video class="tri-vid" src="img/vanta-bg.mp4" autoplay muted loop playsinline aria-hidden="true"></video>`}
       <span class="tri-scrim" aria-hidden="true"></span>
-      ${HERO_LINEUP.map(x=>`
-      <a class="tri-item" href="${urlFor(x.k)}" style="--h:${x.h};--glow:${x.glow}" aria-label="${x.label}">
-        <img src="${x.img}" alt="${x.alt}" width="364" height="1000">
-        <b>${x.label}</b>
-      </a>`).join('')}
+      <img class="hm-logo" src="img/mdg-logo.png" alt="MDG Beverages" width="640" height="330">
     </div></div>`;
 
   const half = Array.from({length:6},()=>`<span><i>${HOUSE.name}</i>${HOUSE.tag}</span>`).join('');
