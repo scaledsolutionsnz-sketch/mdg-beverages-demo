@@ -152,6 +152,15 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
 .house-hero .copy{padding:clamp(46px,6vw,90px) var(--pad) clamp(26px,3vw,40px);text-align:center}
 .house-hero .blurb{margin-left:auto;margin-right:auto}
 .house-hero .spec{justify-content:center}
+/* Dialled back from the full display treatment. The headline no longer runs
+   the width of the page, the negative right margin that pulled it off centre
+   in the old split layout is gone, and the tagline is set in the body face
+   rather than Bodoni italic. The products carry the page, not the type. */
+.house-hero h1{font-size:clamp(38px,5.4vw,78px);line-height:1;letter-spacing:0;
+  margin-right:0;text-shadow:none}
+.house-hero .tag{font-family:var(--body);font-style:normal;font-weight:400;
+  font-size:clamp(15px,1.6vw,19px);letter-spacing:.02em;color:var(--muted);margin-top:16px}
+.house-hero .spec b{font-family:var(--body);font-size:15px;letter-spacing:.04em;font-weight:500}
 
 /* the lineup band: every SKU on one baseline over the running film. The
    footage is Vanta's and carries its pink, so it is pulled back to read as
