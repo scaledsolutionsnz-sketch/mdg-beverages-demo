@@ -145,18 +145,40 @@ body.bgvid-on section#range,body.bgvid-on section#trade,body.bgvid-on section#ho
   gap:clamp(4px,1vw,16px);
   padding:clamp(26px,5vh,60px) clamp(12px,2vw,30px) clamp(30px,6vh,64px)}
 .tri-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-/* House hero. The homepage names no individual brand above the fold, so the
-   product lineup is replaced by the MDG mark over the pour footage. That
+/* House hero, portfolio-first. The hero is one centred statement, then the
+   whole range standing together across the full width. Showing every product
+   at once is a house shot, not a landing page for any one brand. */
+.house-hero{grid-template-columns:1fr;min-height:0;align-items:stretch}
+.house-hero .copy{padding:clamp(46px,6vw,90px) var(--pad) clamp(26px,3vw,40px);text-align:center}
+.house-hero .blurb{margin-left:auto;margin-right:auto}
+.house-hero .spec{justify-content:center}
+
+/* the lineup band: every SKU on one baseline over the running film. The
    footage is Vanta's and carries its pink, so it is pulled back to read as
-   house texture. Remove the filter line to restore the original colour. */
-.housemark{position:relative;height:100%;min-height:340px;overflow:hidden;background:#000;
-  display:flex;align-items:center;justify-content:center;
-  padding:clamp(26px,5vh,60px) clamp(20px,4vw,60px)}
-.housemark .tri-vid{filter:saturate(.24) brightness(.8)}
-.housemark .hm-logo{position:relative;z-index:2;width:min(60%,400px);height:auto;
-  object-fit:contain;animation:none;filter:drop-shadow(0 18px 50px rgba(0,0,0,.7))}
-@media(max-width:560px){.housemark{min-height:300px}
-  .housemark .hm-logo{width:min(72%,300px)}}
+   house texture. Remove the filter to restore the original colour. */
+.lineup{position:relative;overflow:hidden;background:#000;display:flex;
+  align-items:flex-end;justify-content:center;gap:clamp(10px,3vw,58px);
+  padding:clamp(34px,5vw,74px) var(--pad) 0}
+.lineup-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+  filter:saturate(.24) brightness(.8)}
+.lineup-scrim{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(0,0,0,.40) 0%,rgba(0,0,0,.12) 42%,rgba(0,0,0,.88) 100%)}
+.lineup-item{position:relative;z-index:2;text-decoration:none;
+  transition:opacity .45s ease,transform .5s ease}
+.lineup-item img{display:block;height:var(--h,300px);width:auto;max-width:100%;object-fit:contain;
+  -webkit-box-reflect:below 0 linear-gradient(transparent 62%,rgba(255,255,255,.20))}
+.lineup:hover .lineup-item{opacity:.5}
+.lineup:hover .lineup-item:hover,.lineup .lineup-item:focus-visible{opacity:1;transform:translateY(-10px)}
+@media (prefers-reduced-motion:reduce){.lineup-item{transition:none}}
+
+/* brand wordmarks, set in the display face: there are no brand logo files */
+.wordmarks{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:clamp(26px,7vw,96px);padding:clamp(30px,4vw,54px) var(--pad);
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.wordmarks a{font-family:var(--display);font-size:clamp(19px,2.5vw,32px);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--fg);text-decoration:none;opacity:.7;
+  transition:opacity .3s ease,color .3s ease}
+.wordmarks a:hover,.wordmarks a:focus-visible{opacity:1;color:var(--accent)}
 .tri-scrim{position:absolute;inset:0;z-index:1;
   background:linear-gradient(180deg,rgba(0,0,0,.30) 0%,rgba(0,0,0,.42) 55%,rgba(0,0,0,.72) 100%)}
 .tri-item{position:relative;z-index:2;height:min(74vh,100%);display:flex;flex-direction:column;

@@ -47,6 +47,8 @@
 
 <main>
   <div class="hero" id="hero"></div>
+  <div class="lineup" id="lineup"></div>
+  <nav class="wordmarks" id="wordmarks" aria-label="Our brands"></nav>
   <div class="marq" aria-hidden="true"><div class="track" id="marq"></div></div>
   <section id="range"></section>
 
@@ -161,8 +163,22 @@ const HOUSE = {
   spec:[["Capability","Blending &middot; packaging"],["Made in","New Zealand"],["Supply","Venues &middot; retail &middot; distribution"]]
 };
 
-const hero  = document.getElementById('hero');
-const range = document.getElementById('range');
+/* The lineup is every SKU MDG actually sells, once each. The v-can and
+   v-bottle files are alternate angles of the same two products, so they are
+   deliberately not used here to pad the row out. */
+const CAN    = 'clamp(180px,22vw,320px)';
+const BOTTLE = 'clamp(250px,31vw,440px)';
+const LINEUP = [
+  {k:"solara", h:CAN,    img:"img/solara-can-render.png",   label:"Solara",       alt:"Solara Sparkling Mimosa 250 mL can"},
+  {k:"vanta",  h:CAN,    img:"img/v-can-1.png",             label:"Vanta can",    alt:"Vanta Ros&eacute; 250 mL can"},
+  {k:"vanta",  h:BOTTLE, img:"img/vanta-bottle-render.png", label:"Vanta bottle", alt:"Vanta Ros&eacute; 750 mL bottle"}
+];
+
+const hero      = document.getElementById('hero');
+const lineup    = document.getElementById('lineup');
+const wordmarks = document.getElementById('wordmarks');
+const range     = document.getElementById('range');
+const urlFor = k => (MDG_BRANDS.find(b => b.key === k) || {}).url || '/';
 
 function renderHouse(){
   hero.className = 'hero house-hero';
@@ -175,13 +191,20 @@ function renderHouse(){
       <div class="spec">${HOUSE.spec.map(x=>`<div>${x[0]}<b>${x[1]}</b></div>`).join('')}</div>
       <a class="cta solid" data-shop="store" data-buy="Shop the range" href="#"><span class="shop-label">Shop the range</span></a>
       <a class="cta" href="#range" style="margin-left:10px">See the brands</a>
-    </div>
-    <div class="shot fade"><div class="housemark">
-      ${matchMedia('(prefers-reduced-motion: reduce)').matches ? '' :
-        `<video class="tri-vid" src="img/vanta-bg.mp4" autoplay muted loop playsinline aria-hidden="true"></video>`}
-      <span class="tri-scrim" aria-hidden="true"></span>
-      <img class="hm-logo" src="img/mdg-logo.png" alt="MDG Beverages" width="640" height="330">
-    </div></div>`;
+    </div>`;
+
+  lineup.innerHTML = `
+    ${matchMedia('(prefers-reduced-motion: reduce)').matches ? '' :
+      `<video class="lineup-vid" src="img/vanta-bg.mp4" autoplay muted loop playsinline aria-hidden="true"></video>`}
+    <span class="lineup-scrim" aria-hidden="true"></span>
+    ${LINEUP.map(x=>`
+    <a class="lineup-item fade" href="${urlFor(x.k)}" style="--h:${x.h}" aria-label="${x.label}">
+      <img src="${x.img}" alt="${x.alt}">
+    </a>`).join('')}`;
+
+  wordmarks.innerHTML = MDG_BRANDS
+    .filter(b => !b.soon)
+    .map(b => `<a href="${b.url}">${b.name}</a>`).join('');
 
   const half = Array.from({length:6},()=>`<span><i>${HOUSE.name}</i>${HOUSE.tag}</span>`).join('');
   document.getElementById('marq').innerHTML = half + half;
