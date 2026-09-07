@@ -252,8 +252,9 @@ function renderHouse(){
         <h3>${b.name}</h3>
         <p class="bx-accent">${b.note}</p>
         <p>${b.tag || ''}</p>`;
+      /* no bx-go on a soon tile: bx-accent already reads "Coming soon" */
       return b.soon
-        ? `<div class="fade" aria-disabled="true">${inner}<span class="bx-go">Coming soon</span></div>`
+        ? `<div class="fade" aria-disabled="true">${inner}</div>`
         : `<a href="${b.url}" class="fade">${inner}<span class="bx-go">View the brand</span></a>`;
     }).join('')}</div>`;
 
