@@ -18,7 +18,6 @@ const MDG_BRANDS = [
     tag:"Tonight we Vanta.",       shot:"/img/vanta.jpg" },
   { key:"bespoke", name:"Bespoke",      note:"Private label",     url:"/brands/bespoke.html", site:"",
     tag:"Your drink, built properly.", shot:"" },
-  { key:"onlycans",name:"ONLYCANS",     note:"Coming soon", soon:true },
   { key:"divot",   name:"Divot",        note:"Coming soon", soon:true },
   { key:"house",   name:"House Spirits",note:"Coming soon", soon:true }
 ];
