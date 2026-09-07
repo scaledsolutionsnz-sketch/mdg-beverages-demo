@@ -30,6 +30,7 @@ const MDG_BRANDS = [
    ───────────────────────────────────────────────────────────── */
 const SHOP = {
   store:    "",
+  merch:    "",
   solara:   "",
   vanta:    "",
   bespoke:  ""
