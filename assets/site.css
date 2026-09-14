@@ -533,7 +533,7 @@ footer b{font-family:var(--display);color:#F7F8F7;font-size:18px;letter-spacing:
    container and clips the Brands panel hanging below it. The dropdown needs
    to escape, so opt this one out. */
 .navmenu{display:flex;flex:1;align-items:stretch;overflow:visible}
-.navmenu>.brands-menu{position:relative;display:flex}
+.navmenu>.brands-menu{position:static;display:flex}
 .brands-trigger{background:none;border:0;border-right:1px solid var(--rule);
   color:var(--fg);font-family:var(--display);font-size:15px;letter-spacing:.22em;
   text-transform:uppercase;cursor:pointer;padding:20px 26px;position:relative;
@@ -548,21 +548,23 @@ footer b{font-family:var(--display);color:#F7F8F7;font-size:18px;letter-spacing:
   transition:transform .3s ease}
 .brands-trigger[aria-expanded="true"] .caret{transform:rotate(-135deg) translate(-3px,-3px)}
 
-.brands-panel{position:absolute;top:100%;left:0;min-width:322px;background:var(--bg);
-  border:1px solid var(--rule);border-top:0;padding:8px 0;z-index:60;
+.brands-panel{position:absolute;top:100%;left:0;right:0;min-width:0;background:var(--bg);
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  border:1px solid var(--rule);border-top:0;padding:16px var(--pad);z-index:60;
   opacity:0;visibility:hidden;transform:translateY(-8px);
   transition:opacity .24s ease,transform .24s ease,visibility .24s;
   box-shadow:0 26px 50px -30px rgba(0,0,0,.6)}
 .brands-trigger[aria-expanded="true"]+.brands-panel{opacity:1;visibility:visible;transform:none}
-.brands-panel a,.brands-panel span.soon{display:flex;align-items:baseline;gap:12px;
-  padding:13px 24px;color:var(--fg);text-decoration:none;transition:.2s;
+.brands-panel a,.brands-panel span.soon{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:8px;
+  padding:18px 20px;min-width:0;border-right:1px solid var(--rule);color:var(--fg);text-decoration:none;transition:.2s;
   font-family:var(--display);font-size:15px;letter-spacing:.06em}
 .brands-panel a:hover{color:var(--accent);background:rgba(127,127,127,.07)}
 .brands-panel em{font-style:normal;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--muted);margin-left:auto;white-space:nowrap}
+  color:var(--muted);margin-left:0;white-space:normal}
 .brands-panel span.soon{color:var(--muted);cursor:default}
 @media(max-width:720px){
-  .brands-panel{position:fixed;left:0;right:0;min-width:0;border-left:0;border-right:0}
+  .brands-panel{grid-template-columns:repeat(2,minmax(0,1fr));padding:10px 16px;border-left:0;border-right:0}
+  .brands-panel a,.brands-panel span.soon{padding:14px 12px;border-right:0}
 }
 
 /* ── Brand profile page ─────────────────────────────────────────────────────
@@ -627,3 +629,7 @@ body.bgvid-on .profile .pf-shot img{visibility:hidden}
 .film-toggle[hidden]{display:none}
 @media(max-width:899px){body.bgvid-on #bgvid::after{background:color-mix(in srgb,var(--bg) 70%,transparent)}}
 @media(max-width:899px){body.bgvid-on .profile .pf-shot{display:none}}
+
+/* Keep the full-width Brands menu above page content. */
+header{z-index:40}
+.brands-panel>:last-child{border-right:0}
