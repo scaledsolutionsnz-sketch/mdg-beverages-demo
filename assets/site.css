@@ -602,3 +602,20 @@ footer b{font-family:var(--display);color:#F7F8F7;font-size:18px;letter-spacing:
 .pf-soon{margin-top:30px;padding:22px 24px;border:1px solid var(--rule);
   background:rgba(127,127,127,.05);max-width:60ch}
 .pf-soon p{margin:0;color:var(--muted)}
+
+/* Brand pages: contained editorial layout and restored rotating products. */
+body[data-brand="solara"] main,body[data-brand="vanta"] main{max-width:1440px;margin-inline:auto}
+body[data-brand="solara"] main>section:first-child,body[data-brand="vanta"] main>section:first-child{padding-top:24px;padding-bottom:0}
+body[data-brand="solara"] .profile,body[data-brand="vanta"] .profile{padding:40px var(--pad) 64px}
+.profile .pf-top{grid-template-columns:minmax(0,1fr) minmax(0,.85fr);gap:clamp(32px,5vw,72px)}
+.profile .pf-top>div{min-width:0}
+.profile .pf-shot{width:100%;max-width:480px;justify-self:end}
+.profile .pf-shot img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;max-height:600px}
+.profile h1{font-size:clamp(58px,7vw,96px)}
+.profile .pf-body{line-height:1.75;max-width:46ch}
+.profile .pf-spec{gap:20px 26px}
+.profile .pf-actions .cta{margin-top:0}
+#range .gitem:focus-visible,#range .poser:focus-visible{outline:2px solid var(--accent);outline-offset:8px}
+@media(max-width:899px){.profile .pf-top{grid-template-columns:1fr}.profile .pf-shot{justify-self:center;max-width:440px}.profile .pf-shot img{max-height:550px}.profile .pf-body{max-width:100%}}
+#range .gitem{margin:0}
+@media(max-width:900px){#range .solo{min-width:0}#range .orbit{width:100%;max-width:440px}#range .orbit::after{inset:0}#range .orbit .leads{display:none}#range .spec-card{min-width:0;box-sizing:border-box}}
