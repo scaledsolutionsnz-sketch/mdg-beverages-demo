@@ -152,7 +152,7 @@ function wireEnquiry(){
     window.open('https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(to) +
                 '&su=' + su + '&body=' + body, '_blank', 'noopener');
     const sent = document.getElementById('sent');
-    if(sent) sent.style.display = 'block';
+    if(sent){ sent.hidden = false; sent.style.display = 'block'; }
     f.reset();
   });
 }

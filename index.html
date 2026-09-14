@@ -140,31 +140,26 @@
 
     <hr class="rule">
 
-    <section id="trade">
-      <div class="sechead reveal">
-        <div><h2>Stock us, or ask us anything</h2></div>
-      </div>
-      <div class="two">
-        <div class="reveal">
-          <p>Bars, bottle stores, distributors and event buyers. Tell us what you need and where you are, and we will come back with pricing and availability.</p>
-          <p>For anything else, including media and collaborations, use the same form and pick the reason that fits.</p>
-          <p class="shop-note">Our online store is being built now. Every buy button on this site is already in place and will point straight at it the day it opens.</p>
+    <section id="trade" aria-labelledby="trade-title">
+      <div class="contact-layout">
+        <div class="contact-intro">
+          <p class="eyebrow">Trade &amp; enquiries</p>
+          <h2 id="trade-title">Let’s talk<br> drinks.</h2>
+          <p class="contact-lead">Stock our brands. Plan an event.<br>Build something together.</p>
+          <p class="contact-description">Tell us what you have in mind and where you’re based. We’ll help with pricing, availability and the next steps.</p>
+          <div class="contact-store"><span>Online store</span><p>Opening soon. For now, get in touch to enquire about our range.</p></div>
         </div>
-        <div class="reveal">
+        <div class="contact-panel">
+          <h3>Send an enquiry</h3>
+          <p class="contact-panel-note">For trade, distribution, events and everything else.</p>
           <form id="enq">
-            <label>Your name<input type="text" name="name" placeholder="Alex Parata" required></label>
-            <label>Email<input type="email" name="email" placeholder="you@venue.co.nz" required></label>
-            <label>Venue or company<input type="text" name="company" placeholder="Optional"></label>
-            <label>Reason<select name="reason">
-              <option>Trade enquiry</option>
-              <option>Distribution</option>
-              <option>Events</option>
-              <option>Media</option>
-              <option>Something else</option>
-            </select></label>
-            <label>What do you need?<textarea name="msg" placeholder="Brands, volumes, where you are"></textarea></label>
-            <button class="send" type="submit">Send enquiry</button>
-            <p id="sent" style="font-size:14px;color:var(--brass);display:none;margin:4px 0 0">Opening your email client with the details filled in. We will come back to you shortly.</p>
+            <label>Your name<input type="text" name="name" autocomplete="name" placeholder="Full name" required></label>
+            <label>Email address<input type="email" name="email" autocomplete="email" placeholder="you@company.co.nz" required></label>
+            <label>Venue or company <span class="optional">Optional</span><input type="text" name="company" autocomplete="organization" placeholder="Company name"></label>
+            <label>Enquiry type<select name="reason"><option>Trade enquiry</option><option>Distribution</option><option>Events</option><option>Media</option><option>Something else</option></select></label>
+            <label class="contact-wide">What do you have in mind?<textarea name="msg" placeholder="Tell us about your venue, event or idea."></textarea></label>
+            <div class="contact-wide contact-submit"><button class="send" type="submit">Continue to email <span aria-hidden="true">↗</span></button><p>Opens a draft in Gmail for you to send.</p></div>
+            <p id="sent" class="contact-wide contact-status" role="status" hidden>Your email draft is ready in Gmail. Review it there and send when you’re ready.</p>
           </form>
         </div>
       </div>
