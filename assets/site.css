@@ -619,3 +619,11 @@ body[data-brand="solara"] .profile,body[data-brand="vanta"] .profile{padding:40p
 @media(max-width:899px){.profile .pf-top{grid-template-columns:1fr}.profile .pf-shot{justify-self:center;max-width:440px}.profile .pf-shot img{max-height:550px}.profile .pf-body{max-width:100%}}
 #range .gitem{margin:0}
 @media(max-width:900px){#range .solo{min-width:0}#range .orbit{width:100%;max-width:440px}#range .orbit::after{inset:0}#range .orbit .leads{display:none}#range .spec-card{min-width:0;box-sizing:border-box}}
+
+/* Original Solara/Vanta films sit behind the contained brand layouts. */
+body.bgvid-on #bgvid::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,color-mix(in srgb,var(--bg) 92%,transparent),color-mix(in srgb,var(--bg) 65%,transparent) 48%,color-mix(in srgb,var(--bg) 16%,transparent))}
+body.bgvid-on .profile .pf-shot img{visibility:hidden}
+.film-toggle{background:transparent;cursor:pointer;font-family:inherit}
+.film-toggle[hidden]{display:none}
+@media(max-width:899px){body.bgvid-on #bgvid::after{background:color-mix(in srgb,var(--bg) 70%,transparent)}}
+@media(max-width:899px){body.bgvid-on .profile .pf-shot{display:none}}

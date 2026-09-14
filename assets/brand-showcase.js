@@ -141,3 +141,13 @@ function initWheel(gal){
 }
 
 function initBrandShowcase(){wirePosers(); document.querySelectorAll(".orbit").forEach(gal=>{gal.classList.add("lifted");initWheel(gal);});}
+
+/* Restore the original brand films without starting motion for reduced-motion users. */
+(function(){
+  const video=document.getElementById('brandFilm'),toggle=document.querySelector('.film-toggle');
+  if(!video||!toggle||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  video.muted=true;video.src=video.dataset.src;
+  video.addEventListener('playing',()=>{document.getElementById('bgvid').hidden=false;document.body.classList.add('bgvid-on');toggle.hidden=false;toggle.textContent='Pause video';toggle.setAttribute('aria-pressed','false');});
+  toggle.addEventListener('click',()=>{if(video.paused){video.play().catch(()=>{});}else{video.pause();toggle.textContent='Play video';toggle.setAttribute('aria-pressed','true');}});
+  video.play().catch(()=>{});
+})();
